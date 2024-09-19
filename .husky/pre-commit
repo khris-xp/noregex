@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+npm run format || (echo "⛔ Format Failed" && exit 1)
+npm run lint || (echo "⛔ Lint Failed" && exit 1)
+npm run build || (echo "⛔ Build Failed" && exit 1)
+
+git add .
+
+echo "✅ Format, Lint, Build Passed"
