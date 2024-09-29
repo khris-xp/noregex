@@ -27,16 +27,31 @@ const working_status = [
     task: "downloading",
   },
   {
-    name: "mai_kitty",
-    position: "front-dev",
-    task: "fetching",
+    name: "hom",
+    position: "devOps",
+    task: "deploying",
   },
+  {
+    name: "rainbow",
+    position: "UX/UI",
+    task: "designing",
+  },
+  {
+    name: "rew",
+    position: "algorithm",
+    task: "thinking",
+  },
+  {
+    name: "menu",
+    position: "presentor",
+    task: "reading script",
+  }
 ];
 export default function DownLoad() {
   return (
-    <div className="flex flex-col justify-between min-h-screen font-[family-name:var(--font-geist-sans)]">
-      <header className="bg-blue-700 w-full p-6">This is Header</header>
-      <main className="flex h-full w-full justify-center items-center p-8 pb-20 sm:p-20">
+    <main className="flex flex-col justify-between min-h-screen font-[family-name:var(--font-geist-sans)]">
+      {/* <header className="bg-blue-700 w-full p-6">This is Header</header> */}
+      <div className="flex flex-col gap-6 h-full w-full justify-center items-end p-8 pb-20 sm:p-20">
         <CsvDownload
           filename="noble_person"
           columns={table_head}
@@ -45,8 +60,24 @@ export default function DownLoad() {
         >
           Download Here!
         </CsvDownload>
-      </main>
+        <table className="flex flex-col gap-2 rounded-2xl w-[140vw] md:w-[80vw]">
+          <tr className="rounded-lg shadow-md py-4 px-2 grid grid-cols-[1.5fr_2fr_1fr_1fr_2fr_1fr_2.5fr] text-center bg-blue-400 text-white">
+            {table_head.map((column) => (
+              <th key={column.id}>{column.displayName}</th>
+            ))}
+          </tr>
+          {working_status.map((row_data) => (
+            <tr className="rounded-lg shadow-md py-6 px-2 grid grid-cols-[1.5fr_2fr_1fr_1fr_2fr_1fr_2.5fr] text-center bg-white">
+              {Object.keys(row_data).map((key) => (
+                <td className="whitespace-normal break-words">
+                  {row_data[key as keyof typeof row_data]}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </table>
+      </div>
       <footer className="bg-blue-700 w-full p-6"> This is Footer</footer>
-    </div>
+    </main>
   );
 }
