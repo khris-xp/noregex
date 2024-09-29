@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 interface Prop {
   page_amount: number;
@@ -7,7 +7,7 @@ interface Prop {
 export default function Pagination({ page_amount, setPage }: Prop) {
   const pages = Array.from(
     { length: page_amount },
-    (value, index) => index + 1
+    (value, index) => index + 1,
   ); // [1, 2, 3, 4, 5, ..., page_amount]
   const [showRange, setShowRange] = useState<number[]>(pages);
   const [selectedPage, setSelectedPage] = useState<number>(1);
@@ -34,7 +34,7 @@ export default function Pagination({ page_amount, setPage }: Prop) {
   return (
     <div className="inline-block h-full w-fit max-h-12 min-h-4">
       {showSkip && (
-        <>
+        <Fragment>
           <button
             onClick={() => {
               if (showRange[0] > 3) {
@@ -61,7 +61,7 @@ export default function Pagination({ page_amount, setPage }: Prop) {
           >
             {"<"}
           </button>
-        </>
+        </Fragment>
       )}
       {showSkip
         ? showRange.map((number) =>
@@ -83,7 +83,7 @@ export default function Pagination({ page_amount, setPage }: Prop) {
               <ClickableNumber number={number} />
             ) : (
               <></>
-            )
+            ),
           )
         : pages.map((number) => <ClickableNumber number={number} />)}
       {showSkip && (

@@ -171,7 +171,7 @@ export default function Sidebar(props: Props) {
                 () => toggleDropdown(setIsDropdownCountryOpen),
                 <>
                   <ul
-                    className={`overflow-hidden transition-all duration-500 space-y-3 ease-in-out ${
+                    className={`overflow-y-auto transition-all duration-500 space-y-3 ease-in-out ${
                       isDropdownCountryOpen
                         ? "max-h-96 opacity-100"
                         : "max-h-0 opacity-0"
