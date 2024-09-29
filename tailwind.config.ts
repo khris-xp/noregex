@@ -7,6 +7,9 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    fontFamily: {
+      outfit: ["Outfit", "sans-serif"],
+    },
     extend: {
       colors: {
         primary: "#283584",
@@ -16,6 +19,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/line-clamp")],
 };
 export default config;

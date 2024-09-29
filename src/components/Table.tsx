@@ -18,35 +18,33 @@ export default function Table({ data, columns }: Prop) {
           </tr>
         ))}
       </thead>
-      <tbody>
-        {data.map((row_data, idx) => (
-          <tr
-            key={idx}
-            className="py-[12px] mx-4 gap-4 grid grid-cols-[1fr_2fr_2fr_1fr_1.5fr_1.5fr_2fr] text-left border-b-2 border-[#F2F2F7]"
-          >
-            <td>
-              <Image
-                src={row_data.image}
-                width={50}
-                height={50}
-                alt="Nobel Person"
-              />
-            </td>
-            <td className="whitespace-normal break-words">{row_data.name}</td>
-            <td className="whitespace-normal break-words">
-              {row_data.category}
-            </td>
-            <td className="whitespace-normal break-words">{row_data.year}</td>
-            <td className="whitespace-normal break-words">
-              {row_data.birth_year}
-            </td>
-            <td className="whitespace-normal break-words">
-              {row_data.birth_country}
-            </td>
-            <td className="whitespace-normal break-words">{row_data.quote}</td>
-          </tr>
-        ))}
-      </tbody>
+      {data.map((row_data, index) => (
+        <tr
+          key={index}
+          className={`py-[12px] mx-4 gap-4 grid grid-cols-[1fr_2fr_2fr_1fr_1.5fr_1.5fr_2fr] text-left ${index != 9 && "border-b-2"} border-[#F2F2F7]`}
+        >
+          <td>
+            <Image
+              src={row_data.image}
+              width={50}
+              height={50}
+              alt={row_data.name}
+            />
+          </td>
+          <td className="whitespace-normal break-words">{row_data.name}</td>
+          <td className="whitespace-normal break-words">{row_data.category}</td>
+          <td className="whitespace-normal break-words">{row_data.year}</td>
+          <td className="whitespace-normal break-words">
+            {row_data.birth_year}
+          </td>
+          <td className="whitespace-normal break-words">
+            {row_data.birth_country}
+          </td>
+          <td className="whitespace-normal break-words max-h-[6.75rem] overflow-hidden text-ellipsis">
+            <div className="line-clamp-4">{row_data.quote}</div>
+          </td>
+        </tr>
+      ))}
     </table>
   );
 }
