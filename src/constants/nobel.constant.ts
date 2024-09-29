@@ -297,4 +297,794 @@ export const NobelModel: NobelType[] = [
       "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
     quote: "Residence at the time of the award:\nFrance",
   },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
+  {
+    year: 1901,
+    category: "Peace",
+    name: "Fr\u00e9d\u00e9ric Passy",
+    birth_year: "20 May 1822",
+    birth_country: "Paris, France",
+    image:
+      "https://www.nobelprize.org/images/passy-13539-portrait-medium-2x.jpg",
+    quote: "Residence at the time of the award:\nFrance",
+  },
 ];
