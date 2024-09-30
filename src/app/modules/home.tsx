@@ -30,7 +30,7 @@ export default function HomeModules() {
     console.log("View state changed: ", viewState);
   }, [viewState]);
   const [page, setPage] = useState<number>(1);
-  const TABLE_ROW_PER_PAGE = 10;
+  const TABLE_ROW_PER_PAGE = 6;
   const CARD_PER_PAGE = 8;
   return (
     <div className="p-4 sm:ml-96 border-2 border-gray-200 border-dashed rounded-lg bg-background">

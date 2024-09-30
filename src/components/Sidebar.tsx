@@ -2,7 +2,7 @@
 
 import { Category } from "@/constants/category.constant";
 import { CountryType } from "@/types/country";
-import { useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import Checkbox from "./Checkbox";
 import Divider from "./Divider";
 
@@ -11,10 +11,14 @@ type Props = {
 };
 
 export default function Sidebar(props: Props) {
+  const [searchedCountry, setSearchedCountry] = useState<boolean>(false);
   const [isDropdownCategoryOpen, setIsDropdownCategoryOpen] =
     useState<boolean>(false);
   const [isDropdownCountryOpen, setIsDropdownCountryOpen] =
     useState<boolean>(false);
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const countryRefs = useRef<(HTMLLIElement | null)[]>([]);
 
   const [checkboxStates, setCheckboxStates] = useState(
     Array(6)
@@ -39,6 +43,30 @@ export default function Sidebar(props: Props) {
         {},
       ),
   );
+
+  const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      const matchedCountryIndex = props.country.findIndex((c) =>
+        c.name.common.toLowerCase().includes(searchTerm.toLowerCase()),
+      );
+      if (matchedCountryIndex !== -1) {
+        countryRefs.current[matchedCountryIndex]?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+        handleCheckboxChange(
+          setCountryCheckBoxState,
+          `checkbox${matchedCountryIndex + 1}`,
+        );
+      }
+      setSearchedCountry(true);
+      console.log(searchedCountry);
+    }
+  };
 
   const toggleDropdown = (
     setter: React.Dispatch<React.SetStateAction<boolean>>,
@@ -136,7 +164,7 @@ export default function Sidebar(props: Props) {
                 isDropdownCategoryOpen,
                 "Category",
                 () => toggleDropdown(setIsDropdownCategoryOpen),
-                <>
+                <Fragment>
                   {Category.map((category, idx) => (
                     <li
                       className={`overflow-hidden transition-all duration-500 space-y-3 my-3 ease-in-out ${
@@ -158,7 +186,7 @@ export default function Sidebar(props: Props) {
                       />
                     </li>
                   ))}
-                </>,
+                </Fragment>,
               )}
             </li>
             <li>
@@ -169,22 +197,29 @@ export default function Sidebar(props: Props) {
                 isDropdownCountryOpen,
                 "Country",
                 () => toggleDropdown(setIsDropdownCountryOpen),
-                <>
+                <div className="relative">
+                  <input
+                    type="text"
+                    className="bg-input w-11/12 p-2.5 rounded-lg my-2 ml-2 mb-5 mr-14 z-10 sticky top-1"
+                    placeholder="Search country"
+                    value={searchTerm}
+                    onChange={handleSearchInput}
+                    onKeyDown={handleSearchKeyDown}
+                  />
                   <ul
                     className={`overflow-y-auto transition-all duration-500 space-y-3 ease-in-out ${
                       isDropdownCountryOpen
                         ? "max-h-96 opacity-100"
                         : "max-h-0 opacity-0"
-                    }`}
+                    } ${searchedCountry ? "mt-16" : "mt-0"}`}
                   >
-                    <input
-                      type="text"
-                      className="bg-input w-full p-2.5 rounded-lg mt-2 mb-1
-                      "
-                      placeholder="Search country"
-                    />
                     {props.country.map((c, idx) => (
-                      <li key={idx}>
+                      <li
+                        key={idx}
+                        ref={(el) => {
+                          countryRefs.current[idx] = el;
+                        }}
+                      >
                         <Checkbox
                           title={c.name.common}
                           checked={countryCheckboxState[`checkbox${idx + 1}`]}
@@ -198,7 +233,7 @@ export default function Sidebar(props: Props) {
                       </li>
                     ))}
                   </ul>
-                </>,
+                </div>,
               )}
             </li>
             <li>

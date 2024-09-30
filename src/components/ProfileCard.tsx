@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 import { NobelType } from "@/types/nobel";
 
@@ -8,8 +9,10 @@ interface Props {
 const ProfileCard: React.FC<Props> = ({ data }) => {
   return (
     <div className="max-w-sm rounded-lg overflow-hidden shadow-lg bg-white">
-      <img
+      <Image
         className="w-full h-64 object-cover"
+        width={1000}
+        height={1000}
         src={data.image}
         alt={data.name}
       />
