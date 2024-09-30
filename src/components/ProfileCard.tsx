@@ -8,7 +8,7 @@ interface Props {
 
 const ProfileCard: React.FC<Props> = ({ data }) => {
   return (
-    <div className="max-w-sm rounded-lg overflow-hidden shadow-lg bg-white">
+    <div className="max-w-sm rounded-xl overflow-hidden shadow-lg bg-white">
       <Image
         className="w-full h-64 object-cover"
         width={1000}

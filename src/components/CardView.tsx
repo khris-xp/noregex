@@ -8,7 +8,7 @@ interface Props {
 
 const CardView: React.FC<Props> = ({ data }) => {
   return (
-    <div className="rounded-2xl w-full h-full grid grid-cols-4 gap-3">
+    <div className="rounded-2xl w-full h-full grid grid-cols-4 gap-5">
       {data.map((ele, index) => (
         <ProfileCard key={index} data={ele} />
       ))}
