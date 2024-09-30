@@ -1,5 +1,8 @@
+import { fetchNobel } from "@/actions/nobelAction";
 import HomeModules from "./modules/home";
 
-export default function Home() {
+export default async function Home() {
+  // const nobel = await fetchNobel();
+
   return <HomeModules />;
 }
