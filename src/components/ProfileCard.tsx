@@ -1,13 +1,6 @@
 import React from "react";
 import { NobelType } from "@/types/nobel";
 
-// name,
-// image,
-// category,
-// year,
-// birthdate,
-// birth_place,
-// quote,
 interface Props {
   data: NobelType;
 }
