@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 interface ProfileCardProps {
@@ -21,7 +22,13 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
 }) => {
   return (
     <div className="max-w-sm rounded-lg overflow-hidden shadow-lg bg-white">
-      <img className="w-full h-64 object-cover" src={image} alt={name} />
+      <Image
+        className="w-full h-64 object-cover"
+        width={1000}
+        height={1000}
+        src={image}
+        alt={name}
+      />
       <div className="p-6">
         <h2 className="outfit text-gray-700 font-extrabold text-xl mb-2">
           {name}

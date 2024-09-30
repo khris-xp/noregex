@@ -15,11 +15,11 @@ const table_header = [
 
 export default function HomeModules() {
   const [page, setPage] = useState<number>(1);
-  const TABLE_ROW_PER_PAGE = 10;
+  const TABLE_ROW_PER_PAGE = 6;
   return (
-    <div className="p-4 sm:ml-96 border-2 border-gray-200 border-dashed rounded-lg bg-background">
-      <div className="grid grid-cols-2 gap-4 mb-4">
-        <div className="flex items-center justify-center h-24 rounded bg-gray-50">
+    <div className="p-4 sm:ml-96 bg-background min-h-screen">
+      <div className="grid grid-cols-2 gap-4 ">
+        <div className="flex items-center justify-center h-10 rounded bg-gray-50">
           <p className="text-2xl text-gray-400">
             <svg
               className="w-3.5 h-3.5"
@@ -38,7 +38,7 @@ export default function HomeModules() {
             </svg>
           </p>
         </div>
-        <div className="flex items-center justify-center h-24 rounded bg-gray-50">
+        <div className="flex items-center justify-center h-10 rounded bg-gray-50">
           <p className="text-2xl text-gray-400">
             <svg
               className="w-3.5 h-3.5"

@@ -64,30 +64,39 @@ export default function Pagination({ page_amount, setPage }: Prop) {
         </Fragment>
       )}
       {showSkip
-        ? showRange.map((number) =>
-            showRange.length == 5 && number == showRange[0] ? (
-              <p className="float-left flex justify-center items-center w-10 h-10 mx-1 rounded-xl border-2 bg-white text-[#333333] border-[#F1F1F1]">
-                ...
-              </p>
-            ) : number <= showRange[2] ? (
-              <ClickableNumber number={number} />
-            ) : showRange.length != 5 &&
-              number === showRange[showRange.length - 2] ? (
-              <p className="float-left flex justify-center items-center w-10 h-10 mx-1 rounded-xl border-2 bg-white text-[#333333] border-[#F1F1F1]">
-                ...
-              </p>
-            ) : number === showRange[showRange.length - 1] ? (
-              <ClickableNumber number={number} />
-            ) : showRange.length == 5 &&
-              number === showRange[showRange.length - 2] ? (
-              <ClickableNumber number={number} />
-            ) : (
-              <></>
-            ),
-          )
-        : pages.map((number) => <ClickableNumber number={number} />)}
+        ? showRange.map((number, index) => {
+            const isEllipsisStart =
+              showRange.length === 5 && number === showRange[0];
+            const isEllipsisEnd =
+              (showRange.length !== 5 &&
+                number === showRange[showRange.length - 2]) ||
+              (showRange.length === 5 &&
+                number === showRange[showRange.length - 2]);
+            const isMiddleNumber = number <= showRange[2];
+            const isLastNumber = number === showRange[showRange.length - 1];
+
+            if (isEllipsisStart || isEllipsisEnd) {
+              return (
+                <p
+                  key={index}
+                  className="float-left flex justify-center items-center w-10 h-10 mx-1 rounded-xl border-2 bg-white text-[#333333] border-[#F1F1F1]"
+                >
+                  ...
+                </p>
+              );
+            }
+
+            if (isMiddleNumber || isLastNumber) {
+              return <ClickableNumber key={index} number={number} />;
+            }
+
+            return null;
+          })
+        : pages.map((number, index) => (
+            <ClickableNumber key={index} number={number} />
+          ))}
       {showSkip && (
-        <>
+        <Fragment>
           <button
             onClick={() => {
               if (showRange.length > 5) setShowRange(showRange.slice(1));
@@ -108,7 +117,7 @@ export default function Pagination({ page_amount, setPage }: Prop) {
           >
             {">>"}
           </button>
-        </>
+        </Fragment>
       )}
     </div>
   );
