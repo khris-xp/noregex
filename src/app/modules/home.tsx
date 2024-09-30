@@ -3,7 +3,7 @@ import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import { NobelModel } from "@/constants/nobel.constant";
 import Header from "@/components/Header";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 const table_header = [
   "Image",
   "Name",
@@ -15,6 +15,19 @@ const table_header = [
 ];
 
 export default function HomeModules() {
+  const [viewState, setViewState] = useState(0);
+
+  function clickCardView() {
+    setViewState(0);
+  }
+
+  function clickTableView() {
+    setViewState(1);
+  }
+
+  useEffect(() => {
+    console.log("View state changed: ", viewState);
+  }, [viewState]);
   const [page, setPage] = useState<number>(1);
   const TABLE_ROW_PER_PAGE = 10;
   return (
@@ -59,7 +72,12 @@ export default function HomeModules() {
           </p>
         </div>
       </div> */}
-      <Header result={NobelModel} />
+      <Header
+        result={NobelModel}
+        clickCardHandler={clickCardView}
+        clickTableHandler={clickTableView}
+        currentView={viewState}
+      />
 
       <div className="flex items-center justify-center h-fit mb-4 rounded bg-gray-50">
         <Table

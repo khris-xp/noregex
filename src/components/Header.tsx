@@ -4,9 +4,17 @@ import { useState, useEffect } from "react";
 
 type HeaderProps = {
   result: NobelType[];
+  clickTableHandler: any;
+  clickCardHandler: any;
+  currentView: number;
 };
 
-const Header: React.FC<HeaderProps> = ({ result }) => {
+const Header: React.FC<HeaderProps> = ({
+  result,
+  clickTableHandler,
+  clickCardHandler,
+  currentView,
+}) => {
   const [viewState, setViewState] = useState(0);
 
   function clickCardView() {
@@ -29,14 +37,22 @@ const Header: React.FC<HeaderProps> = ({ result }) => {
       <div className="flex rounded "></div>
       <div className="grid grid-cols-3 rounded bg-gray-50 gap-4">
         <button
-          onClick={clickCardView}
-          className="bg-[#283584] text-white rounded"
+          onClick={clickCardHandler}
+          className={
+            currentView == 0
+              ? "bg-[#283584] text-white rounded hover:cursor-pointer"
+              : "bg-white text-black rounded hover:cursor-pointer"
+          }
         >
           Card
         </button>
         <button
-          onClick={clickTableView}
-          className="bg-[#283584] text-white rounded"
+          onClick={clickTableHandler}
+          className={
+            currentView == 1
+              ? "bg-[#283584] text-white rounded hover:cursor-pointer"
+              : "bg-white text-black rounded hover:cursor-pointer"
+          }
         >
           Table
         </button>
