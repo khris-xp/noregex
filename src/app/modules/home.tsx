@@ -2,6 +2,7 @@
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import { NobelModel } from "@/constants/nobel.constant";
+import Header from "@/components/Header";
 import { useState } from "react";
 const table_header = [
   "Image",
@@ -18,7 +19,7 @@ export default function HomeModules() {
   const TABLE_ROW_PER_PAGE = 10;
   return (
     <div className="p-4 sm:ml-96 border-2 border-gray-200 border-dashed rounded-lg bg-background">
-      <div className="grid grid-cols-2 gap-4 mb-4">
+      {/* <div className="grid grid-cols-2 gap-4 mb-4">
         <div className="flex items-center justify-center h-24 rounded bg-gray-50">
           <p className="text-2xl text-gray-400">
             <svg
@@ -57,7 +58,8 @@ export default function HomeModules() {
             </svg>
           </p>
         </div>
-      </div>
+      </div> */}
+      <Header result={NobelModel} />
 
       <div className="flex items-center justify-center h-fit mb-4 rounded bg-gray-50">
         <Table
