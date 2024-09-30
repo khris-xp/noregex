@@ -1,6 +1,5 @@
 import React from "react";
 import { NobelType } from "@/types/nobel";
-import { useState, useEffect } from "react";
 
 type HeaderProps = {
   result: NobelType[];
@@ -15,20 +14,6 @@ const Header: React.FC<HeaderProps> = ({
   clickCardHandler,
   currentView,
 }) => {
-  const [viewState, setViewState] = useState(0);
-
-  function clickCardView() {
-    setViewState(0);
-  }
-
-  function clickTableView() {
-    setViewState(1);
-  }
-
-  useEffect(() => {
-    console.log("View state changed: ", viewState);
-  }, [viewState]);
-
   return (
     <div className="mt-2 mb-3 grid grid-cols-3 gap-4">
       <div className="flex rounded bg-gray-50">

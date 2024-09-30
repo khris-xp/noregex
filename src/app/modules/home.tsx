@@ -4,6 +4,7 @@ import Table from "@/components/Table";
 import { NobelModel } from "@/constants/nobel.constant";
 import Header from "@/components/Header";
 import { useState, useEffect } from "react";
+import CardView from "@/components/CardView";
 const table_header = [
   "Image",
   "Name",
@@ -30,6 +31,7 @@ export default function HomeModules() {
   }, [viewState]);
   const [page, setPage] = useState<number>(1);
   const TABLE_ROW_PER_PAGE = 10;
+  const CARD_PER_PAGE = 6;
   return (
     <div className="p-4 sm:ml-96 border-2 border-gray-200 border-dashed rounded-lg bg-background">
       {/* <div className="grid grid-cols-2 gap-4 mb-4">
@@ -80,10 +82,14 @@ export default function HomeModules() {
       />
 
       <div className="flex items-center justify-center h-fit mb-4 rounded bg-gray-50">
-        <Table
-          data={NobelModel.slice(0, TABLE_ROW_PER_PAGE)}
-          columns={table_header}
-        />
+        {viewState == 1 ? (
+          <Table
+            data={NobelModel.slice(0, TABLE_ROW_PER_PAGE)}
+            columns={table_header}
+          />
+        ) : (
+          <CardView data={NobelModel.slice(0, CARD_PER_PAGE)} />
+        )}
       </div>
 
       <div className="grid grid-cols-2 gap-4 mb-4">
