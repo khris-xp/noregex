@@ -216,7 +216,9 @@ export default function Sidebar(props: Props) {
                     {props.country.map((c, idx) => (
                       <li
                         key={idx}
-                        ref={(el) => (countryRefs.current[idx] = el)}
+                        ref={(el) => {
+                          countryRefs.current[idx] = el;
+                        }}
                       >
                         <Checkbox
                           title={c.name.common}
