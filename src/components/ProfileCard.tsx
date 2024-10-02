@@ -9,13 +9,23 @@ interface Props {
 const ProfileCard: React.FC<Props> = ({ data }) => {
   return (
     <div className="max-w-sm rounded-xl overflow-hidden shadow-lg bg-white">
-      <Image
-        className="w-full h-96 object-cover"
-        width={1000}
-        height={1000}
-        src={data.image}
-        alt={data.name}
-      />
+      <div className="relative">
+        <Image
+          className="w-full h-96 object-cover"
+          width={1000}
+          height={1000}
+          src={data.image}
+          alt={data.name}
+        />
+        <div className="absolute top-2 right-2 w-10 h-10">
+          <Image
+            src={`/${data.category.toLowerCase()}.svg`}
+            width={100}
+            height={100}
+            alt="category-icon"
+          />
+        </div>
+      </div>
       <div className="p-6 font-normal">
         <h2 className="text-2xl font-semibold mb-2">{data.name}</h2>
         <p className="text-gray-900">
