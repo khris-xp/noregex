@@ -38,13 +38,13 @@ export default function Table({ data, columns }: Prop) {
             </td>
             <td className="whitespace-normal break-words">{row_data.year}</td>
             <td className="whitespace-normal break-words">
-              {row_data.birth_year}
+              {row_data.born_date}
             </td>
             <td className="whitespace-normal break-words">
-              {row_data.birth_country}
+              {row_data.born_place}
             </td>
             <td className="whitespace-normal break-words max-h-[6.75rem] overflow-hidden text-ellipsis">
-              <div className="line-clamp-4">{row_data.quote}</div>
+              <div className="line-clamp-4">{row_data.motivation}</div>
             </td>
           </tr>
         ))}
