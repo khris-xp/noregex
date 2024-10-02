@@ -7,67 +7,53 @@ import { TABLE_HEADER } from "@/constants/table.cosntant";
 import { PAGE_ENUM } from "@/enums/page.enum";
 import { STATE_ENUM } from "@/enums/state.enum";
 import { NobelType } from "@/types/nobel";
+import { PaginationType } from "@/types/pagination";
+import { useRouter } from "next/navigation";
 import { SetStateAction, useState } from "react";
 
 type Props = {
   nobel: NobelType[];
+  initialPage: number;
+  pagination: PaginationType;
 };
 
 export default function HomeModules(props: Props) {
+  const router = useRouter();
   const [viewState, setViewState] = useState(STATE_ENUM.CARD_STATE);
 
   const handleChangeState = (state: SetStateAction<STATE_ENUM>) => {
     setViewState(state);
   };
 
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+    router.push(`/?page=${newPage}`);
+  };
+
   const [page, setPage] = useState<number>(1);
   return (
     <div className="p-4 sm:ml-96 border-2 border-gray-200 border-dashed rounded-lg bg-background">
       <Header
-        result={props.nobel}
+        result={props.pagination.total_records}
         hanldeChangeState={handleChangeState}
         currentView={viewState}
       />
 
       <div className="flex items-center justify-center h-fit mb-4 rounded bg-gray-50">
         {viewState === STATE_ENUM.TABLE_STATE ? (
-          <Table
-            data={props.nobel.slice(0, PAGE_ENUM.TABLE_ROW_PER_PAGE)}
-            columns={TABLE_HEADER}
-          />
+          <Table data={props.nobel} columns={TABLE_HEADER} />
         ) : (
-          <CardView data={props.nobel.slice(0, PAGE_ENUM.CARD_PER_PAGE)} />
+          <CardView data={props.nobel} />
         )}
       </div>
 
-      <div className="grid grid-cols-2 gap-4 mb-4">
-        <div className="flex items-center justify-center h-fit rounded bg-gray-50">
-          <p className="text-2xl text-gray-400">
-            <svg
-              className="w-3.5 h-3.5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 18 18"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinejoin="round"
-                strokeLinecap="round"
-                strokeWidth="2"
-                d="M9 1v16M1 9h16"
-              />
-            </svg>
-          </p>
-        </div>
-        <div className="flex items-center justify-end rounded py-2">
-          <Pagination
-            page_amount={Math.ceil(
-              props.nobel.length / PAGE_ENUM.TABLE_ROW_PER_PAGE,
-            )}
-            setPage={() => setPage}
-          />
-        </div>
+      <div className="flex items-center justify-end rounded py-2">
+        <Pagination
+          currentPage={page}
+          onPageChange={handlePageChange}
+          totalItems={props.pagination.total_pages}
+          itemsPerPage={PAGE_ENUM.TABLE_ROW_PER_PAGE}
+        />
       </div>
     </div>
   );

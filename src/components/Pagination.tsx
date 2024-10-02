@@ -1,124 +1,87 @@
-import { Fragment, useEffect, useState } from "react";
-
-interface Prop {
-  page_amount: number;
-  setPage: (data: number) => void;
+interface IProps {
+  totalItems: number;
+  itemsPerPage: number;
+  currentPage: number;
+  onPageChange: (page: number) => void;
 }
-export default function Pagination({ page_amount, setPage }: Prop) {
-  const pages = Array.from(
-    { length: page_amount },
-    (value, index) => index + 1,
-  ); // [1, 2, 3, 4, 5, ..., page_amount]
-  const [showRange, setShowRange] = useState<number[]>(pages);
-  const [selectedPage, setSelectedPage] = useState<number>(1);
-  const [showSkip, setShowSkip] = useState<boolean>(pages.length > 9);
 
-  useEffect(() => {
-    setPage(selectedPage);
-    // alert(selectedPage);
-  }, [selectedPage]);
+const Pagination: React.FC<IProps> = (props) => {
+  const startPage = Math.max(
+    1,
+    props.currentPage - Math.floor(props.itemsPerPage / 2),
+  );
+  const endPage = Math.min(
+    props.totalItems,
+    startPage + props.itemsPerPage - 1,
+  );
 
-  interface Prop {
-    number: number;
-  }
-  function ClickableNumber({ number }: Prop) {
-    return (
-      <button
-        onClick={() => setSelectedPage(number)}
-        className="float-left flex justify-center items-center w-10 h-10 mx-1 rounded-xl border-2 bg-white hover:bg-[#283584] text-[#333333] hover:text-white border-[#F1F1F1] hover:border-[#283584]"
-      >
-        {number}
-      </button>
-    );
-  }
   return (
-    <div className="inline-block h-full w-fit max-h-12 min-h-4">
-      {showSkip && (
-        <Fragment>
-          <button
-            onClick={() => {
-              if (showRange[0] > 3) {
-                setShowRange([
-                  showRange[0] - 3,
-                  showRange[0] - 2,
-                  showRange[0] - 1,
-                  ...showRange,
-                ]);
-              } else {
-                setShowRange(pages);
-              }
-            }}
-            className="float-left flex justify-center items-center w-10 h-10 mx-1 rounded-xl border-2 bg-white hover:bg-[#283584] text-[#333333] hover:text-white border-[#F1F1F1] hover:border-[#283584]"
-          >
-            {"<<"}
-          </button>
-          <button
-            onClick={() => {
-              if (showRange[0] > 1)
-                setShowRange([showRange[0] - 1, ...showRange]);
-            }}
-            className="float-left flex justify-center items-center w-10 h-10 mx-1 rounded-xl border-2 bg-white hover:bg-[#283584] text-[#333333] hover:text-white border-[#F1F1F1] hover:border-[#283584]"
-          >
-            {"<"}
-          </button>
-        </Fragment>
-      )}
-      {showSkip
-        ? showRange.map((number, index) => {
-            const isEllipsisStart =
-              showRange.length === 5 && number === showRange[0];
-            const isEllipsisEnd =
-              (showRange.length !== 5 &&
-                number === showRange[showRange.length - 2]) ||
-              (showRange.length === 5 &&
-                number === showRange[showRange.length - 2]);
-            const isMiddleNumber = number <= showRange[2];
-            const isLastNumber = number === showRange[showRange.length - 1];
+    <div>
+      <ul className="flex items-center -space-x-px h-8 text-sm">
+        {props.currentPage > 1 && (
+          <li>
+            <button
+              className={`float-left flex justify-center items-center w-10 h-10 mx-1 rounded-xl border-2 bg-white hover:bg-primary text-gray-800 hover:text-white border-gray-200 hover:border-primary cursor-pointer`}
+              onClick={() => props.onPageChange(props.currentPage - 1)}
+            >
+              {"<<"}
+            </button>
+          </li>
+        )}
 
-            if (isEllipsisStart || isEllipsisEnd) {
-              return (
-                <p
-                  key={index}
-                  className="float-left flex justify-center items-center w-10 h-10 mx-1 rounded-xl border-2 bg-white text-[#333333] border-[#F1F1F1]"
-                >
-                  ...
-                </p>
-              );
-            }
+        {startPage > 1 && (
+          <div className="px-1">
+            <button
+              className={`float-left flex justify-center items-center w-10 h-10 mx-1 rounded-xl border-2 ${props.currentPage === 1 ? "bg-primary text-white border-primary" : "bg-white text-gray-800 border-gray-200"} hover:bg-primary hover:text-white border-gray-200 hover:border-primary cursor-pointer`}
+              onClick={() => props.onPageChange(1)}
+              type="button"
+            >
+              1
+            </button>
+          </div>
+        )}
 
-            if (isMiddleNumber || isLastNumber) {
-              return <ClickableNumber key={index} number={number} />;
-            }
+        {startPage > 2 && <div className="px-1">...</div>}
 
-            return null;
-          })
-        : pages.map((number, index) => (
-            <ClickableNumber key={index} number={number} />
-          ))}
-      {showSkip && (
-        <Fragment>
+        {Array.from(
+          { length: endPage - startPage + 1 },
+          (_, index) => startPage + index,
+        ).map((page) => (
+          <div className="px-1" key={page}>
+            <button
+              className={`float-left flex justify-center items-center w-10 h-10 mx-1 rounded-xl border-2 ${props.currentPage === page ? "bg-primary text-white border-primary" : "bg-white text-gray-800 border-gray-200"} hover:bg-primary hover:text-white hover:border-primary cursor-pointer`}
+              onClick={() => props.onPageChange(page)}
+              type="button"
+              disabled={props.currentPage === page}
+            >
+              {page.toString()}
+            </button>
+          </div>
+        ))}
+        {endPage < props.totalItems - 1 && <div className="px-1">...</div>}
+        {endPage < props.totalItems && (
+          <div className="px-1">
+            <button
+              className={`float-left flex justify-center items-center w-10 h-10 mx-1 rounded-xl border-2 ${props.currentPage === props.totalItems - 1 ? "bg-primary text-white border-primary" : "bg-white text-gray-800 border-gray-200"} hover:bg-primary hover:text-white border-gray-200 hover:border-primary cursor-pointer`}
+              onClick={() => props.onPageChange(props.totalItems - 1)}
+              type="button"
+            >
+              {props.totalItems.toString()}
+            </button>
+          </div>
+        )}
+        <li>
           <button
-            onClick={() => {
-              if (showRange.length > 5) setShowRange(showRange.slice(1));
-            }}
-            className="float-left flex justify-center items-center w-10 h-10 mx-1 rounded-xl border-2 bg-white hover:bg-[#283584] text-[#333333] hover:text-white border-[#F1F1F1] hover:border-[#283584]"
-          >
-            {">"}
-          </button>
-          <button
-            onClick={() => {
-              if (showRange.length > 8) {
-                setShowRange(showRange.slice(3));
-              } else {
-                setShowRange(showRange.slice(-5));
-              }
-            }}
-            className="float-left flex justify-center items-center w-10 h-10 mx-1 rounded-xl border-2 bg-white hover:bg-[#283584] text-[#333333] hover:text-white border-[#F1F1F1] hover:border-[#283584]"
+            className="float-left flex justify-center items-center w-10 h-10 mx-1 rounded-xl border-2 bg-white hover:bg-[#283584] text-[#333333] hover:text-white border-[#F1F1F1] hover:border-[#283584] cursor-pointer"
+            onClick={() => props.onPageChange(props.currentPage + 1)}
+            disabled={props.currentPage === props.totalItems - 1}
           >
             {">>"}
           </button>
-        </Fragment>
-      )}
+        </li>
+      </ul>
     </div>
   );
-}
+};
+
+export default Pagination;

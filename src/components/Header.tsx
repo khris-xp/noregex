@@ -3,7 +3,7 @@ import { NobelType } from "@/types/nobel";
 import React, { SetStateAction } from "react";
 
 type HeaderProps = {
-  result: NobelType[];
+  result: number;
   hanldeChangeState: (state: SetStateAction<STATE_ENUM>) => void;
   currentView: STATE_ENUM;
 };
@@ -17,7 +17,7 @@ const Header: React.FC<HeaderProps> = ({
     <div className="p-6 py-10">
       <div className="flex justify-between">
         <div className="rounded bg-gray-50">
-          <p className="font-bold text-xl">{result.length} Result</p>
+          <p className="font-bold text-xl">{result} Result</p>
         </div>
         <div className="rounded bg-gray-50 gap-4">
           <button
