@@ -19,7 +19,7 @@ const ProfileCard: React.FC<Props> = ({ data }) => {
         />
         <div className="absolute top-2 right-2 w-10 h-10">
           <Image
-            src={`/${data.category.toLowerCase()}.svg`}
+            src={`/${data.category.toLowerCase().split(" ")[0]}.svg`}
             width={100}
             height={100}
             alt="category-icon"
