@@ -14,9 +14,7 @@ export default async function Home({
   };
 
   const nobel = await fetchNobel(props);
-
   const initialPage = parseInt(searchParams.page || "1", 10);
-
   const pagination: PaginationType = nobel.pagination;
 
   return (

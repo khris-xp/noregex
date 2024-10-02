@@ -1,5 +1,4 @@
 import { STATE_ENUM } from "@/enums/state.enum";
-import { NobelType } from "@/types/nobel";
 import React, { SetStateAction } from "react";
 
 type HeaderProps = {
@@ -49,8 +48,8 @@ const Header: React.FC<HeaderProps> = ({
               width="9.6"
               height="9.6"
               stroke={currentView == STATE_ENUM.CARD_STATE ? "white" : "black"}
-              stroke-width="1.33333"
-              stroke-linejoin="round"
+              strokeWidth="1.33333"
+              strokeLinejoin="round"
             />
             <rect
               x="22.4"
@@ -58,8 +57,8 @@ const Header: React.FC<HeaderProps> = ({
               width="9.6"
               height="9.6"
               stroke={currentView == STATE_ENUM.CARD_STATE ? "white" : "black"}
-              stroke-width="1.33333"
-              stroke-linejoin="round"
+              strokeWidth="1.33333"
+              strokeLinejoin="round"
             />
             <rect
               x="22.4"
@@ -67,8 +66,8 @@ const Header: React.FC<HeaderProps> = ({
               width="9.6"
               height="9.6"
               stroke={currentView == STATE_ENUM.CARD_STATE ? "white" : "black"}
-              stroke-width="1.33333"
-              stroke-linejoin="round"
+              strokeWidth="1.33333"
+              strokeLinejoin="round"
             />
           </svg>
         </button>
@@ -93,8 +92,8 @@ const Header: React.FC<HeaderProps> = ({
               width="9.93103"
               height="9.93103"
               stroke={currentView == STATE_ENUM.TABLE_STATE ? "white" : "black"}
-              stroke-width="1.24138"
-              stroke-linejoin="round"
+              strokeWidth="1.24138"
+              strokeLinejoin="round"
             />
             <rect
               x="8"
@@ -102,32 +101,32 @@ const Header: React.FC<HeaderProps> = ({
               width="9.93103"
               height="9.93103"
               stroke={currentView == STATE_ENUM.TABLE_STATE ? "white" : "black"}
-              stroke-width="1.24138"
-              stroke-linejoin="round"
+              strokeWidth="1.24138"
+              strokeLinejoin="round"
             />
             <path
               d="M22.069 9.65515H32"
               stroke={currentView == STATE_ENUM.TABLE_STATE ? "white" : "black"}
-              stroke-width="1.24138"
-              stroke-linecap="round"
+              strokeWidth="1.24138"
+              strokeLinecap="round"
             />
             <path
               d="M22.069 15.4482H32"
               stroke={currentView == STATE_ENUM.TABLE_STATE ? "white" : "black"}
-              stroke-width="1.24138"
-              stroke-linecap="round"
+              strokeWidth="1.24138"
+              strokeLinecap="round"
             />
             <path
               d="M22.069 23.7241H32"
               stroke={currentView == STATE_ENUM.TABLE_STATE ? "white" : "black"}
-              stroke-width="1.24138"
-              stroke-linecap="round"
+              strokeWidth="1.24138"
+              strokeLinecap="round"
             />
             <path
               d="M22.069 29.5172H32"
               stroke={currentView == STATE_ENUM.TABLE_STATE ? "white" : "black"}
-              stroke-width="1.24138"
-              stroke-linecap="round"
+              strokeWidth="1.24138"
+              strokeLinecap="round"
             />
           </svg>
         </button>
