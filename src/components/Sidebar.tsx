@@ -64,7 +64,6 @@ export default function Sidebar(props: Props) {
         );
       }
       setSearchedCountry(true);
-      console.log(searchedCountry);
     }
   };
 

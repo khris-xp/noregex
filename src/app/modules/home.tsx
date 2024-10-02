@@ -1,54 +1,42 @@
 "use client";
+import CardView from "@/components/CardView";
+import Header from "@/components/Header";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
-import { NobelModel } from "@/constants/nobel.constant";
-import Header from "@/components/Header";
-import { useState, useEffect } from "react";
-import CardView from "@/components/CardView";
-const table_header = [
-  "Image",
-  "Name",
-  "Category",
-  "Year",
-  "Birthdate",
-  "Birthplace",
-  "Quote",
-];
+import { TABLE_HEADER } from "@/constants/table.cosntant";
+import { PAGE_ENUM } from "@/enums/page.enum";
+import { STATE_ENUM } from "@/enums/state.enum";
+import { NobelType } from "@/types/nobel";
+import { SetStateAction, useState } from "react";
 
-export default function HomeModules() {
-  const [viewState, setViewState] = useState(0);
+type Props = {
+  nobel: NobelType[];
+};
 
-  function clickCardView() {
-    setViewState(0);
-  }
+export default function HomeModules(props: Props) {
+  const [viewState, setViewState] = useState(STATE_ENUM.CARD_STATE);
 
-  function clickTableView() {
-    setViewState(1);
-  }
+  const handleChangeState = (state: SetStateAction<STATE_ENUM>) => {
+    setViewState(state);
+  };
 
-  useEffect(() => {
-    console.log("View state changed: ", viewState);
-  }, [viewState]);
   const [page, setPage] = useState<number>(1);
-  const TABLE_ROW_PER_PAGE = 6;
-  const CARD_PER_PAGE = 8;
   return (
     <div className="p-4 sm:ml-96 border-2 border-gray-200 border-dashed rounded-lg bg-background">
       <Header
-        result={NobelModel}
-        clickCardHandler={clickCardView}
-        clickTableHandler={clickTableView}
+        result={props.nobel}
+        hanldeChangeState={handleChangeState}
         currentView={viewState}
       />
 
       <div className="flex items-center justify-center h-fit mb-4 rounded bg-gray-50">
-        {viewState == 1 ? (
+        {viewState === STATE_ENUM.TABLE_STATE ? (
           <Table
-            data={NobelModel.slice(0, TABLE_ROW_PER_PAGE)}
-            columns={table_header}
+            data={props.nobel.slice(0, PAGE_ENUM.TABLE_ROW_PER_PAGE)}
+            columns={TABLE_HEADER}
           />
         ) : (
-          <CardView data={NobelModel.slice(0, CARD_PER_PAGE)} />
+          <CardView data={props.nobel.slice(0, PAGE_ENUM.CARD_PER_PAGE)} />
         )}
       </div>
 
@@ -74,7 +62,9 @@ export default function HomeModules() {
         </div>
         <div className="flex items-center justify-end rounded py-2">
           <Pagination
-            page_amount={Math.ceil(NobelModel.length / TABLE_ROW_PER_PAGE)}
+            page_amount={Math.ceil(
+              props.nobel.length / PAGE_ENUM.TABLE_ROW_PER_PAGE,
+            )}
             setPage={() => setPage}
           />
         </div>
