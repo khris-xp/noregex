@@ -22,7 +22,7 @@ export default function Sidebar(props: Props) {
     useState<boolean>(false);
   const [isDropdownCountryOpen, setIsDropdownCountryOpen] =
     useState<boolean>(false);
-
+  const [searchName, setSearchName] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const countryRefs = useRef<(HTMLLIElement | null)[]>([]);
 
@@ -82,9 +82,12 @@ export default function Sidebar(props: Props) {
 
     let query = "?";
 
-    console.log(query);
     if (categories.length > 0) {
       query += `category_filter=${categories.join(",")}&`;
+    }
+
+    if (searchName !== "") {
+      query += `name_filter=${searchName}&`;
     }
 
     if (countryName.length > 0) {
@@ -98,6 +101,37 @@ export default function Sidebar(props: Props) {
     router.push(`${query}`);
 
     setSearchedCountry(true);
+  };
+
+  const clearFilter = () => {
+    setSelectedCategories([]);
+    setSelectedCountries([]);
+    setSearchName("");
+    setSearchTerm("");
+    setSearchedCountry(false);
+    setCheckboxStates(
+      Array(6)
+        .fill(false)
+        .reduce(
+          (acc, _, idx) => ({
+            ...acc,
+            [`checkbox${idx + 1}`]: false,
+          }),
+          {},
+        ),
+    );
+    setCountryCheckBoxState(
+      Array(255)
+        .fill(false)
+        .reduce(
+          (acc, _, idx) => ({
+            ...acc,
+            [`checkbox${idx + 1}`]: false,
+          }),
+          {},
+        ),
+    );
+    router.push("/");
   };
 
   const toggleDropdown = (
@@ -224,6 +258,8 @@ export default function Sidebar(props: Props) {
                 type="text"
                 className="bg-input w-full p-2.5 rounded-lg"
                 placeholder="Search name"
+                value={searchName}
+                onChange={(e) => setSearchName(e.target.value)}
               />
             </li>
             <li>
@@ -318,7 +354,10 @@ export default function Sidebar(props: Props) {
               >
                 Search
               </button>
-              <button className="w-1/4 py-1 text-gray-400 rounded-xl border border-gray-400">
+              <button
+                onClick={clearFilter}
+                className="w-1/4 py-1 text-gray-400 rounded-xl border border-gray-400"
+              >
                 <div className="flex items-center justify-center space-x-1">
                   <div>
                     <svg

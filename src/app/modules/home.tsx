@@ -30,15 +30,17 @@ export default function HomeModules(props: Props) {
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
-    if (props.searchParams.category_filter) {
-      router.push(
-        `/?category_filter=${props.searchParams.category_filter}&page=${newPage}`,
-      );
-    } else {
-      router.push(`/?page=${newPage}`);
-    }
-  };
+    const { category_filter, name_filter } = props.searchParams;
 
+    const queryParams = new URLSearchParams();
+
+    if (category_filter) queryParams.append("category_filter", category_filter);
+    if (name_filter) queryParams.append("name_filter", name_filter);
+
+    queryParams.append("page", newPage.toString());
+
+    router.push(`/?${queryParams.toString()}`);
+  };
   const [page, setPage] = useState<number>(1);
   return (
     <div className="p-4 sm:ml-96 border-2 border-gray-200 border-dashed rounded-lg bg-background">

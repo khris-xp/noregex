@@ -6,6 +6,7 @@ import HomeModules from "./modules/home";
 export type SearchParamsProps = {
   page?: string;
   category_filter?: string;
+  name_filter?: string;
 };
 
 export default async function Home({
@@ -17,6 +18,7 @@ export default async function Home({
     page: searchParams.page || "1",
     page_size: PAGE_ENUM.CARD_PER_PAGE.toString(),
     category_filter: searchParams.category_filter || "",
+    name_filter: searchParams.name_filter || "",
   };
 
   const nobel = await fetchNobel(props);
