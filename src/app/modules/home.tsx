@@ -1,5 +1,6 @@
 "use client";
 import CardView from "@/components/CardView";
+import Empty from "@/components/Empty";
 import Header from "@/components/Header";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
@@ -10,11 +11,13 @@ import { NobelType } from "@/types/nobel";
 import { PaginationType } from "@/types/pagination";
 import { useRouter } from "next/navigation";
 import { SetStateAction, useState } from "react";
+import { SearchParamsProps } from "../page";
 
 type Props = {
   nobel: NobelType[];
   initialPage: number;
   pagination: PaginationType;
+  searchParams: SearchParamsProps;
 };
 
 export default function HomeModules(props: Props) {
@@ -27,9 +30,17 @@ export default function HomeModules(props: Props) {
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
-    router.push(`/?page=${newPage}`);
-  };
+    const { category_filter, name_filter } = props.searchParams;
 
+    const queryParams = new URLSearchParams();
+
+    if (category_filter) queryParams.append("category_filter", category_filter);
+    if (name_filter) queryParams.append("name_filter", name_filter);
+
+    queryParams.append("page", newPage.toString());
+
+    router.push(`/?${queryParams.toString()}`);
+  };
   const [page, setPage] = useState<number>(1);
   return (
     <div className="p-4 sm:ml-96 border-2 border-gray-200 border-dashed rounded-lg bg-background">
@@ -40,7 +51,9 @@ export default function HomeModules(props: Props) {
       />
 
       <div className="flex items-center justify-center h-fit mb-4 rounded bg-gray-50">
-        {viewState === STATE_ENUM.TABLE_STATE ? (
+        {props.nobel.length === 0 ? (
+          <Empty />
+        ) : viewState === STATE_ENUM.TABLE_STATE ? (
           <Table data={props.nobel} columns={TABLE_HEADER} />
         ) : (
           <CardView data={props.nobel} />
