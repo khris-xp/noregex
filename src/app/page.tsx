@@ -7,6 +7,7 @@ export type SearchParamsProps = {
   page?: string;
   category_filter?: string;
   name_filter?: string;
+  prize_year?: string;
 };
 
 export default async function Home({
@@ -19,6 +20,7 @@ export default async function Home({
     page_size: PAGE_ENUM.CARD_PER_PAGE.toString(),
     category_filter: searchParams.category_filter || "",
     name_filter: searchParams.name_filter || "",
+    prize_year: searchParams.prize_year || "",
   };
 
   const nobel = await fetchNobel(props);
