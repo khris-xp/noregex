@@ -7,6 +7,7 @@ export type NobelProps = {
   page_size: string;
   name_filter?: string;
   category_filter?: string;
+  prize_year?: string;
 };
 
 export async function fetchNobel(
@@ -18,6 +19,10 @@ export async function fetchNobel(
   }
   if (props.category_filter) {
     query += `&category_filter=${props.category_filter}`;
+  }
+
+  if (props.prize_year) {
+    query += `&prize_year=${props.prize_year}`;
   }
   const response = await fetch(
     `https://toc-api.onionstreasure.com/nobel-prizes?${query}`,

@@ -30,12 +30,13 @@ export default function HomeModules(props: Props) {
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
-    const { category_filter, name_filter } = props.searchParams;
+    const { category_filter, name_filter, prize_year } = props.searchParams;
 
     const queryParams = new URLSearchParams();
 
     if (category_filter) queryParams.append("category_filter", category_filter);
     if (name_filter) queryParams.append("name_filter", name_filter);
+    if (prize_year) queryParams.append("prize_year", prize_year);
 
     queryParams.append("page", newPage.toString());
 

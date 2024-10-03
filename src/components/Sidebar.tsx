@@ -15,6 +15,10 @@ type Props = {
 
 export default function Sidebar(props: Props) {
   const router = useRouter();
+  const [startYear, setStartYear] = useState("");
+  const [endYear, setEndYear] = useState("");
+  const [startBornYear, setStartBornYear] = useState("");
+  const [endBornYear, setEndBornYear] = useState("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedCountries, setSelectedCountries] = useState<string[]>([]);
   const [searchedCountry, setSearchedCountry] = useState<boolean>(false);
@@ -88,6 +92,10 @@ export default function Sidebar(props: Props) {
 
     if (searchName !== "") {
       query += `name_filter=${searchName}&`;
+    }
+
+    if (startYear !== "") {
+      query += `prize_year=${startYear}&`;
     }
 
     if (countryName.length > 0) {
@@ -291,6 +299,29 @@ export default function Sidebar(props: Props) {
                   ))}
                 </Fragment>,
               )}
+            </li>
+            <li>
+              <Divider />
+            </li>
+            <li>
+              <label className="block mb-2 font-semibold">Year</label>
+              <div className="flex items-center space-x-5">
+                <input
+                  type="text"
+                  className="bg-input w-1/2 p-2.5 rounded-lg placeholder:font-light"
+                  placeholder="Year"
+                  value={startYear}
+                  onChange={(e) => setStartYear(e.target.value)}
+                />
+                <div>-</div>
+                <input
+                  type="text"
+                  className="bg-input w-1/2 p-2.5 rounded-lg placeholder:font-light"
+                  placeholder="Year"
+                  value={endYear}
+                  onChange={(e) => setEndYear(e.target.value)}
+                />
+              </div>
             </li>
             <li>
               <Divider />
