@@ -1,16 +1,22 @@
 "use client";
 
+import { SearchParamsProps } from "@/app/page";
 import { Category } from "@/constants/category.constant";
 import { CountryType } from "@/types/country";
+import { useRouter } from "next/navigation";
 import { Fragment, useRef, useState } from "react";
 import Checkbox from "./Checkbox";
 import Divider from "./Divider";
 
 type Props = {
   country: CountryType[];
+  searchParams: SearchParamsProps;
 };
 
 export default function Sidebar(props: Props) {
+  const router = useRouter();
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedCountries, setSelectedCountries] = useState<string[]>([]);
   const [searchedCountry, setSearchedCountry] = useState<boolean>(false);
   const [isDropdownCategoryOpen, setIsDropdownCategoryOpen] =
     useState<boolean>(false);
@@ -58,13 +64,40 @@ export default function Sidebar(props: Props) {
           behavior: "smooth",
           block: "center",
         });
-        handleCheckboxChange(
-          setCountryCheckBoxState,
-          `checkbox${matchedCountryIndex + 1}`,
-        );
+        handleCountryCheckboxChange(`checkbox${matchedCountryIndex + 1}`);
       }
       setSearchedCountry(true);
     }
+  };
+
+  const handleSearch = () => {
+    const categories = Category.filter(
+      (_, idx) => checkboxStates[`checkbox${idx + 1}`],
+    );
+    const country = props.country.filter(
+      (_, idx) => countryCheckboxState[`checkbox${idx + 1}`],
+    );
+
+    const countryName = country.map((c) => c.name.common);
+
+    let query = "?";
+
+    console.log(query);
+    if (categories.length > 0) {
+      query += `category_filter=${categories.join(",")}&`;
+    }
+
+    if (countryName.length > 0) {
+      query += `country_filter=${countryName.join(",")}&`;
+    }
+
+    if (searchTerm) {
+      query += `name_filter=${searchTerm}&`;
+    }
+
+    router.push(`${query}`);
+
+    setSearchedCountry(true);
   };
 
   const toggleDropdown = (
@@ -77,14 +110,52 @@ export default function Sidebar(props: Props) {
 
   type SetStateAction = React.Dispatch<React.SetStateAction<CheckboxState>>;
 
+  const handleCategoryCheckboxChange = (checkboxKey: string) => {
+    handleCheckboxChange(
+      setCheckboxStates,
+      checkboxKey,
+      setSelectedCategories,
+      selectedCategories,
+    );
+  };
+
+  const handleCountryCheckboxChange = (checkboxKey: string) => {
+    handleCheckboxChange(
+      setCountryCheckBoxState,
+      checkboxKey,
+      setSelectedCountries,
+      selectedCountries,
+    );
+  };
+
   const handleCheckboxChange = (
     setState: SetStateAction,
     checkboxKey: string,
-  ) =>
-    setState((prevState) => ({
-      ...prevState,
-      [checkboxKey]: !prevState[checkboxKey],
-    }));
+    setSelectedItems: React.Dispatch<React.SetStateAction<string[]>>,
+    selectedItems: string[],
+  ) => {
+    setState((prevState) => {
+      const newState = {
+        ...prevState,
+        [checkboxKey]: !prevState[checkboxKey],
+      };
+
+      const index = checkboxKey.match(/\d+/)?.[0];
+      if (index) {
+        const selectedIndex = parseInt(index);
+
+        if (newState[checkboxKey]) {
+          setSelectedItems([...selectedItems, `${selectedIndex}`]);
+        } else {
+          setSelectedItems(
+            selectedItems.filter((item) => item !== `${selectedIndex}`),
+          );
+        }
+      }
+
+      return newState;
+    });
+  };
 
   const renderDropdown = (
     isOpen: boolean,
@@ -177,10 +248,7 @@ export default function Sidebar(props: Props) {
                         title={category}
                         checked={checkboxStates[`checkbox${idx + 1}`]}
                         onChange={() =>
-                          handleCheckboxChange(
-                            setCheckboxStates,
-                            `checkbox${idx + 1}`,
-                          )
+                          handleCategoryCheckboxChange(`checkbox${idx + 1}`)
                         }
                       />
                     </li>
@@ -223,10 +291,7 @@ export default function Sidebar(props: Props) {
                           title={c.name.common}
                           checked={countryCheckboxState[`checkbox${idx + 1}`]}
                           onChange={() =>
-                            handleCheckboxChange(
-                              setCountryCheckBoxState,
-                              `checkbox${idx + 1}`,
-                            )
+                            handleCountryCheckboxChange(`checkbox${idx + 1}`)
                           }
                         />
                       </li>
@@ -247,7 +312,10 @@ export default function Sidebar(props: Props) {
               />
             </li>
             <li>
-              <button className="w-full bg-primary py-2 text-white rounded-xl mb-5 mt-3">
+              <button
+                onClick={handleSearch}
+                className="w-full bg-primary py-2 text-white rounded-xl mb-5 mt-3"
+              >
                 Search
               </button>
               <button className="w-1/4 py-1 text-gray-400 rounded-xl border border-gray-400">

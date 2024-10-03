@@ -2,7 +2,7 @@
 
 import { ModelResponseType } from "@/types/response";
 
-type NobelProps = {
+export type NobelProps = {
   page: string;
   page_size: string;
   name_filter?: string;

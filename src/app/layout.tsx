@@ -3,6 +3,7 @@ import Sidebar from "@/components/Sidebar";
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
+import { SearchParamsProps } from "./page";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,14 +17,17 @@ const outfit = Outfit({
 
 export default async function RootLayout({
   children,
+  searchParams,
 }: Readonly<{
   children: React.ReactNode;
+  searchParams: SearchParamsProps;
 }>) {
+  console.log("searchParams", searchParams);
   const country = await fetchCountry();
   return (
     <html lang="en">
       <body className={`${outfit.className}`}>
-        <Sidebar country={country} />
+        <Sidebar country={country} searchParams={searchParams} />
         <main>{children}</main>
       </body>
     </html>
