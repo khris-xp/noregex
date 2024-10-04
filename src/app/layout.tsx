@@ -1,9 +1,9 @@
 import { fetchCountry } from "@/actions/countryAction";
 import Sidebar from "@/components/Sidebar";
+import { SearchParamsProps } from "@/types/search";
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
-import { SearchParamsProps } from "./page";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -22,7 +22,6 @@ export default async function RootLayout({
   children: React.ReactNode;
   searchParams: SearchParamsProps;
 }>) {
-  console.log("searchParams", searchParams);
   const country = await fetchCountry();
   return (
     <html lang="en">

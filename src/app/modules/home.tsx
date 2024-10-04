@@ -9,9 +9,9 @@ import { PAGE_ENUM } from "@/enums/page.enum";
 import { STATE_ENUM } from "@/enums/state.enum";
 import { NobelType } from "@/types/nobel";
 import { PaginationType } from "@/types/pagination";
+import { SearchParamsProps } from "@/types/search";
 import { useRouter } from "next/navigation";
 import { SetStateAction, useState } from "react";
-import { SearchParamsProps } from "../page";
 
 type Props = {
   nobel: NobelType[];
@@ -30,21 +30,25 @@ export default function HomeModules(props: Props) {
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
-    const { category_filter, name_filter, prize_year } = props.searchParams;
+    const { category_filter, name_filter, prize_year_start, prize_year_end } =
+      props.searchParams;
 
     const queryParams = new URLSearchParams();
 
     if (category_filter) queryParams.append("category_filter", category_filter);
     if (name_filter) queryParams.append("name_filter", name_filter);
-    if (prize_year) queryParams.append("prize_year", prize_year);
+    if (prize_year_start)
+      queryParams.append("prize_year_start", prize_year_start);
+    if (prize_year_end) queryParams.append("prize_year_end", prize_year_end);
 
     queryParams.append("page", newPage.toString());
 
     router.push(`/?${queryParams.toString()}`);
   };
+
   const [page, setPage] = useState<number>(1);
   return (
-    <div className="p-4 sm:ml-96 border-2 border-gray-200 border-dashed rounded-lg bg-background">
+    <div className="p-4 sm:ml-96 rounded-lg bg-background">
       <Header
         result={props.pagination.total_records}
         hanldeChangeState={handleChangeState}

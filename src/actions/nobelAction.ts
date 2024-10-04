@@ -1,14 +1,7 @@
 "use server";
 
+import { NobelProps } from "@/types/nobel";
 import { ModelResponseType } from "@/types/response";
-
-export type NobelProps = {
-  page: string;
-  page_size: string;
-  name_filter?: string;
-  category_filter?: string;
-  prize_year?: string;
-};
 
 export async function fetchNobel(
   props: NobelProps,
@@ -21,17 +14,28 @@ export async function fetchNobel(
     query += `&category_filter=${props.category_filter}`;
   }
 
-  if (props.prize_year) {
-    query += `&prize_year=${props.prize_year}`;
+  if (props.prize_year_start) {
+    query += `&prize_year_start=${props.prize_year_start}`;
   }
+
+  if (props.prize_year_end) {
+    query += `&prize_year_end=${props.prize_year_end}`;
+  }
+
+  if (props.country_filter) {
+    query += `&country_filter=${props.country_filter}`;
+  }
+
   const response = await fetch(
     `https://toc-api.onionstreasure.com/nobel-prizes?${query}`,
     {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        "Accept-Encoding": "no-difference",
       },
     },
   );
-  return response.json();
+  const data = await response.json();
+  return data;
 }
