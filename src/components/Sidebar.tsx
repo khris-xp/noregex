@@ -68,7 +68,8 @@ export default function Sidebar(props: Props) {
           behavior: "smooth",
           block: "center",
         });
-        handleCountryCheckboxChange(`checkbox${matchedCountryIndex + 1}`);
+        if (!selectedCountries.includes(`${matchedCountryIndex + 1}`))
+          handleCountryCheckboxChange(`checkbox${matchedCountryIndex + 1}`);
       }
       setSearchedCountry(true);
     }
@@ -331,6 +332,8 @@ export default function Sidebar(props: Props) {
                 isDropdownCountryOpen,
                 "Country",
                 () => toggleDropdown(setIsDropdownCountryOpen),
+
+                // country search box
                 <div className="relative">
                   <input
                     type="text"
