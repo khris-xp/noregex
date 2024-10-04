@@ -1,0 +1,4 @@
+export enum STATE_ENUM {
+  CARD_STATE = "CARD_STATE",
+  TABLE_STATE = "TABLE_STATE",
+}
