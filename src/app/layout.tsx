@@ -22,7 +22,6 @@ export default async function RootLayout({
   children: React.ReactNode;
   searchParams: SearchParamsProps;
 }>) {
-  console.log("searchParams", searchParams);
   const country = await fetchCountry();
   return (
     <html lang="en">

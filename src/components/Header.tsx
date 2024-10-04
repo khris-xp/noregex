@@ -1,4 +1,3 @@
-"use client"
 import { fetchNobel, NobelProps } from "@/actions/nobelAction";
 import { SearchParamsProps } from "@/app/page";
 import { CsvHeader } from "@/constants/csv-column.constant";
@@ -23,18 +22,15 @@ const Header: React.FC<HeaderProps> = ({
 }) => {
 
   const handleQueryData = async () => {
-    console.log("doing handle query data...");
-
     const props: NobelProps = {
       page: "1",
-      page_size: "2000",
+      page_size: "100",
       category_filter: searchParams.category_filter || "",
       name_filter: searchParams.name_filter || "",
       prize_year: searchParams.prize_year || "",
     };
-    console.log("with: ",props);
     const nobel = await fetchNobel(props);
-    console.log("nobel data: ",nobel.data);
+    
     return Promise.resolve(nobel.data as unknown as any[]);
   };
 

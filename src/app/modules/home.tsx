@@ -43,6 +43,7 @@ export default function HomeModules(props: Props) {
 
     router.push(`/?${queryParams.toString()}`);
   };
+  
   const [page, setPage] = useState<number>(1);
   return (
     <div className="p-4 sm:ml-96 border-2 border-gray-200 border-dashed rounded-lg bg-background">
