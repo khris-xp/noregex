@@ -13,18 +13,19 @@ const Header: React.FC<HeaderProps> = ({
   currentView,
 }) => {
   return (
-    <div className="flex justify-between py-6">
-      <div className="rounded bg-gray-50 flex items-center">
+    <div className="flex justify-between items-center py-6 px-4 md:px-6">
+      <div className="flex items-center ml-10 md:ml-0">
         <p className="font-semibold text-xl">{result} Result</p>
       </div>
-      <div className="rounded bg-gray-50 gap-4 space-x-1 items-center flex">
+
+      <div className="flex items-center space-x-2 md:space-x-4">
         <button
           onClick={() => hanldeChangeState(STATE_ENUM.CARD_STATE)}
-          className={
-            currentView == STATE_ENUM.CARD_STATE
-              ? "bg-[#283584] text-white rounded hover:cursor-pointer p-0.5"
-              : "bg-white text-black rounded hover:cursor-pointer p-0.5"
-          }
+          className={`p-2 rounded ${
+            currentView === STATE_ENUM.CARD_STATE
+              ? "bg-primary text-white"
+              : "bg-white text-black"
+          }`}
         >
           <svg
             width="40"
@@ -73,11 +74,11 @@ const Header: React.FC<HeaderProps> = ({
         </button>
         <button
           onClick={() => hanldeChangeState(STATE_ENUM.TABLE_STATE)}
-          className={
-            currentView == STATE_ENUM.TABLE_STATE
-              ? "bg-[#283584] text-white rounded hover:cursor-pointer p-0.5"
-              : "bg-white text-black rounded hover:cursor-pointer p-0.5"
-          }
+          className={`p-2 rounded ${
+            currentView === STATE_ENUM.TABLE_STATE
+              ? "bg-primary text-white"
+              : "bg-white text-black"
+          }`}
         >
           <svg
             width="40"
