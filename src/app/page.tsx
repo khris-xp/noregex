@@ -27,9 +27,6 @@ export default async function Home({
   const initialPage = parseInt(searchParams.page || "1", 10);
   const pagination: PaginationType = nobel.pagination;
 
-  console.log("Nobel Data : ", nobel.data);
-  console.log("Pagination : ", pagination);
-
   return (
     <HomeModules
       nobel={nobel.data}

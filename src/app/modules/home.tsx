@@ -31,7 +31,6 @@ export default function HomeModules({
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
-    console.log("New Pages : ", newPage);
     const queryParams = new URLSearchParams({
       ...searchParams,
       page: newPage.toString(),
@@ -49,7 +48,7 @@ export default function HomeModules({
   };
 
   return (
-    <div className="p-4 sm:ml-96 rounded-lg bg-background">
+    <div className="p-4 md:ml-96 rounded-lg bg-background">
       <Header
         result={pagination.total_records}
         hanldeChangeState={setViewState}

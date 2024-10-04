@@ -15,6 +15,7 @@ type Props = {
 
 export default function Sidebar(props: Props) {
   const router = useRouter();
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [startYear, setStartYear] = useState<string>("");
   const [endYear, setEndYear] = useState<string>("");
   const [startBornYear, setStartBornYear] = useState<string>("");
@@ -107,6 +108,7 @@ export default function Sidebar(props: Props) {
     const query = filters ? `?${filters}` : "";
     router.push(query);
     setSearchedCountry(true);
+    setIsSidebarOpen(false);
   };
 
   const clearFilter = () => {
@@ -245,13 +247,38 @@ export default function Sidebar(props: Props) {
 
   return (
     <div>
-      <button className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden">
+      <button
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+        className={`md:hidden ${isSidebarOpen && "hidden"} fixed top-11 left-4 z-50 p-2 bg-primary text-white rounded-lg`}
+      >
         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
           <path d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z" />
         </svg>
       </button>
 
-      <aside className="fixed top-0 left-0 z-40 w-96 h-screen p-4">
+      <button
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+        className={`md:hidden ${!isSidebarOpen && "hidden"} fixed top-4 right-4 z-50 p-2 bg-primary text-white rounded-lg`}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="size-6"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z"
+            clip-rule="evenodd"
+          />
+        </svg>
+      </button>
+
+      <aside
+        className={`fixed top-0 left-0 z-40 w-full md:w-96 h-screen p-4 bg-white transition-transform ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } md:translate-x-0`}
+      >
         <div className="h-full px-3 py-4 overflow-y-auto">
           <ul className="space-y-2 font-medium">
             <li>
