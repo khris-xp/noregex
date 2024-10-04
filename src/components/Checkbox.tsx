@@ -31,7 +31,9 @@ export default function Checkbox({ title, checked, onChange }: CheckboxProps) {
           </svg>
         </span>
       </label>
-      <label className="cursor-pointer ml-2 text-sm">{title}</label>
+      <button onClick={() => onChange(!checked)}>
+        <label className="cursor-pointer ml-2 text-sm">{title}</label>
+      </button>
     </div>
   );
 }

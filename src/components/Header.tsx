@@ -1,4 +1,8 @@
+"use client"
+import { fetchNobel, NobelProps } from "@/actions/nobelAction";
+import { SearchParamsProps } from "@/app/page";
 import { CsvHeader } from "@/constants/csv-column.constant";
+import { PAGE_ENUM } from "@/enums/page.enum";
 import { STATE_ENUM } from "@/enums/state.enum";
 import { NobelType } from "@/types/nobel";
 import React, { SetStateAction, useState } from "react";
@@ -8,23 +12,32 @@ type HeaderProps = {
   result: number;
   hanldeChangeState: (state: SetStateAction<STATE_ENUM>) => void;
   currentView: STATE_ENUM;
-  columns: string[];
-  fetchData: () => NobelType[];
+  searchParams: SearchParamsProps;
 };
 
 const Header: React.FC<HeaderProps> = ({
   result,
   hanldeChangeState,
   currentView,
-  columns,
-  fetchData,
+  searchParams,
 }) => {
-  const [csvData, setCsvData] = useState<NobelType[]>([]);
-  const getData = async () =>{
-    const nobel = await fetchData();
-    setCsvData(nobel)
-    return nobel;
-  }
+
+  const handleQueryData = async () => {
+    console.log("doing handle query data...");
+
+    const props: NobelProps = {
+      page: "1",
+      page_size: "2000",
+      category_filter: searchParams.category_filter || "",
+      name_filter: searchParams.name_filter || "",
+      prize_year: searchParams.prize_year || "",
+    };
+    console.log("with: ",props);
+    const nobel = await fetchNobel(props);
+    console.log("nobel data: ",nobel.data);
+    return Promise.resolve(nobel.data as unknown as any[]);
+  };
+
   return (
     <div className="flex justify-between py-6">
       <div className="rounded bg-gray-50 flex items-center">
@@ -146,11 +159,11 @@ const Header: React.FC<HeaderProps> = ({
         <CsvDownload
           filename="noble_person"
           columns={CsvHeader}
-          datas={csvData}
+          datas={handleQueryData}
           className="bg-primary px-4 p-2.5 text-white rounded-lg font-medium"
-          >
+        >
           Download CSV
-        </CsvDownload> 
+        </CsvDownload>
       </div>
     </div>
   );

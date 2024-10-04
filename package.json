@@ -12,6 +12,9 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@tailwindcss/line-clamp": "^0.4.4",
+    "eslint-config-next": "^14.2.0",
+    "eslint": "^9.0.0",
     "next": "14.2.12",
     "react": "^18",
     "react-csv-downloader": "^3.1.1",
@@ -21,8 +24,6 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.12",
     "husky": "^9.1.6",
     "postcss": "^8",
     "prettier": "^3.3.3",

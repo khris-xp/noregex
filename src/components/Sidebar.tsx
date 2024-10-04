@@ -1,20 +1,34 @@
 "use client";
 
+import { SearchParamsProps } from "@/app/page";
 import { Category } from "@/constants/category.constant";
 import { CountryType } from "@/types/country";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Fragment, useRef, useState } from "react";
 import Checkbox from "./Checkbox";
 import Divider from "./Divider";
 
 type Props = {
   country: CountryType[];
+  searchParams: SearchParamsProps;
 };
 
 export default function Sidebar(props: Props) {
+  const router = useRouter();
+  const [startYear, setStartYear] = useState("");
+  const [endYear, setEndYear] = useState("");
+  const [startBornYear, setStartBornYear] = useState("");
+  const [endBornYear, setEndBornYear] = useState("");
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedCountries, setSelectedCountries] = useState<string[]>([]);
+  const [searchedCountry, setSearchedCountry] = useState<boolean>(false);
   const [isDropdownCategoryOpen, setIsDropdownCategoryOpen] =
     useState<boolean>(false);
   const [isDropdownCountryOpen, setIsDropdownCountryOpen] =
     useState<boolean>(false);
+  const [searchName, setSearchName] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const countryRefs = useRef<(HTMLLIElement | null)[]>([]);
 
   const [checkboxStates, setCheckboxStates] = useState(
     Array(6)
@@ -40,6 +54,94 @@ export default function Sidebar(props: Props) {
       ),
   );
 
+  const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      const matchedCountryIndex = props.country.findIndex((c) =>
+        c.name.common.toLowerCase().includes(searchTerm.toLowerCase()),
+      );
+      if (matchedCountryIndex !== -1) {
+        countryRefs.current[matchedCountryIndex]?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+        handleCountryCheckboxChange(`checkbox${matchedCountryIndex + 1}`);
+      }
+      setSearchedCountry(true);
+    }
+  };
+
+  const handleSearch = () => {
+    const categories = Category.filter(
+      (_, idx) => checkboxStates[`checkbox${idx + 1}`],
+    );
+    const country = props.country.filter(
+      (_, idx) => countryCheckboxState[`checkbox${idx + 1}`],
+    );
+
+    const countryName = country.map((c) => c.name.common);
+
+    let query = "?";
+
+    if (categories.length > 0) {
+      query += `category_filter=${categories.join(",")}&`;
+    }
+
+    if (searchName !== "") {
+      query += `name_filter=${searchName}&`;
+    }
+
+    if (startYear !== "") {
+      query += `prize_year=${startYear}&`;
+    }
+
+    if (countryName.length > 0) {
+      query += `country_filter=${countryName.join(",")}&`;
+    }
+
+    if (searchTerm) {
+      query += `name_filter=${searchTerm}&`;
+    }
+
+    router.push(`${query}`);
+
+    setSearchedCountry(true);
+  };
+
+  const clearFilter = () => {
+    setSelectedCategories([]);
+    setSelectedCountries([]);
+    setSearchName("");
+    setSearchTerm("");
+    setSearchedCountry(false);
+    setCheckboxStates(
+      Array(6)
+        .fill(false)
+        .reduce(
+          (acc, _, idx) => ({
+            ...acc,
+            [`checkbox${idx + 1}`]: false,
+          }),
+          {},
+        ),
+    );
+    setCountryCheckBoxState(
+      Array(255)
+        .fill(false)
+        .reduce(
+          (acc, _, idx) => ({
+            ...acc,
+            [`checkbox${idx + 1}`]: false,
+          }),
+          {},
+        ),
+    );
+    router.push("/");
+  };
+
   const toggleDropdown = (
     setter: React.Dispatch<React.SetStateAction<boolean>>,
   ) => setter((prev) => !prev);
@@ -50,14 +152,52 @@ export default function Sidebar(props: Props) {
 
   type SetStateAction = React.Dispatch<React.SetStateAction<CheckboxState>>;
 
+  const handleCategoryCheckboxChange = (checkboxKey: string) => {
+    handleCheckboxChange(
+      setCheckboxStates,
+      checkboxKey,
+      setSelectedCategories,
+      selectedCategories,
+    );
+  };
+
+  const handleCountryCheckboxChange = (checkboxKey: string) => {
+    handleCheckboxChange(
+      setCountryCheckBoxState,
+      checkboxKey,
+      setSelectedCountries,
+      selectedCountries,
+    );
+  };
+
   const handleCheckboxChange = (
     setState: SetStateAction,
     checkboxKey: string,
-  ) =>
-    setState((prevState) => ({
-      ...prevState,
-      [checkboxKey]: !prevState[checkboxKey],
-    }));
+    setSelectedItems: React.Dispatch<React.SetStateAction<string[]>>,
+    selectedItems: string[],
+  ) => {
+    setState((prevState) => {
+      const newState = {
+        ...prevState,
+        [checkboxKey]: !prevState[checkboxKey],
+      };
+
+      const index = checkboxKey.match(/\d+/)?.[0];
+      if (index) {
+        const selectedIndex = parseInt(index);
+
+        if (newState[checkboxKey]) {
+          setSelectedItems([...selectedItems, `${selectedIndex}`]);
+        } else {
+          setSelectedItems(
+            selectedItems.filter((item) => item !== `${selectedIndex}`),
+          );
+        }
+      }
+
+      return newState;
+    });
+  };
 
   const renderDropdown = (
     isOpen: boolean,
@@ -126,6 +266,8 @@ export default function Sidebar(props: Props) {
                 type="text"
                 className="bg-input w-full p-2.5 rounded-lg"
                 placeholder="Search name"
+                value={searchName}
+                onChange={(e) => setSearchName(e.target.value)}
               />
             </li>
             <li>
@@ -136,7 +278,7 @@ export default function Sidebar(props: Props) {
                 isDropdownCategoryOpen,
                 "Category",
                 () => toggleDropdown(setIsDropdownCategoryOpen),
-                <>
+                <Fragment>
                   {Category.map((category, idx) => (
                     <li
                       className={`overflow-hidden transition-all duration-500 space-y-3 my-3 ease-in-out ${
@@ -150,16 +292,36 @@ export default function Sidebar(props: Props) {
                         title={category}
                         checked={checkboxStates[`checkbox${idx + 1}`]}
                         onChange={() =>
-                          handleCheckboxChange(
-                            setCheckboxStates,
-                            `checkbox${idx + 1}`,
-                          )
+                          handleCategoryCheckboxChange(`checkbox${idx + 1}`)
                         }
                       />
                     </li>
                   ))}
-                </>,
+                </Fragment>,
               )}
+            </li>
+            <li>
+              <Divider />
+            </li>
+            <li>
+              <label className="block mb-2 font-semibold">Year</label>
+              <div className="flex items-center space-x-5">
+                <input
+                  type="text"
+                  className="bg-input w-1/2 p-2.5 rounded-lg placeholder:font-light"
+                  placeholder="Year"
+                  value={startYear}
+                  onChange={(e) => setStartYear(e.target.value)}
+                />
+                <div>-</div>
+                <input
+                  type="text"
+                  className="bg-input w-1/2 p-2.5 rounded-lg placeholder:font-light"
+                  placeholder="Year"
+                  value={endYear}
+                  onChange={(e) => setEndYear(e.target.value)}
+                />
+              </div>
             </li>
             <li>
               <Divider />
@@ -169,36 +331,40 @@ export default function Sidebar(props: Props) {
                 isDropdownCountryOpen,
                 "Country",
                 () => toggleDropdown(setIsDropdownCountryOpen),
-                <>
+                <div className="relative">
+                  <input
+                    type="text"
+                    className="bg-input w-11/12 p-2.5 rounded-lg my-2 ml-2 mb-5 mr-14 z-10 sticky top-1"
+                    placeholder="Search country"
+                    value={searchTerm}
+                    onChange={handleSearchInput}
+                    onKeyDown={handleSearchKeyDown}
+                  />
                   <ul
-                    className={`overflow-hidden transition-all duration-500 space-y-3 ease-in-out ${
+                    className={`overflow-y-auto transition-all duration-500 space-y-3 ease-in-out ${
                       isDropdownCountryOpen
                         ? "max-h-96 opacity-100"
                         : "max-h-0 opacity-0"
-                    }`}
+                    } ${searchedCountry ? "mt-16" : "mt-0"}`}
                   >
-                    <input
-                      type="text"
-                      className="bg-input w-full p-2.5 rounded-lg mt-2 mb-1
-                      "
-                      placeholder="Search country"
-                    />
                     {props.country.map((c, idx) => (
-                      <li key={idx}>
+                      <li
+                        key={idx}
+                        ref={(el) => {
+                          countryRefs.current[idx] = el;
+                        }}
+                      >
                         <Checkbox
                           title={c.name.common}
                           checked={countryCheckboxState[`checkbox${idx + 1}`]}
                           onChange={() =>
-                            handleCheckboxChange(
-                              setCountryCheckBoxState,
-                              `checkbox${idx + 1}`,
-                            )
+                            handleCountryCheckboxChange(`checkbox${idx + 1}`)
                           }
                         />
                       </li>
                     ))}
                   </ul>
-                </>,
+                </div>,
               )}
             </li>
             <li>
@@ -213,10 +379,16 @@ export default function Sidebar(props: Props) {
               />
             </li>
             <li>
-              <button className="w-full bg-primary py-2 text-white rounded-xl mb-5 mt-3">
+              <button
+                onClick={handleSearch}
+                className="w-full bg-primary py-2 text-white rounded-xl mb-5 mt-3"
+              >
                 Search
               </button>
-              <button className="w-1/4 py-1 text-gray-400 rounded-xl border border-gray-400">
+              <button
+                onClick={clearFilter}
+                className="w-1/4 py-1 text-gray-400 rounded-xl border border-gray-400"
+              >
                 <div className="flex items-center justify-center space-x-1">
                   <div>
                     <svg
