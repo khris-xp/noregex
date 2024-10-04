@@ -42,6 +42,7 @@ export default function HomeModules(props: Props) {
 
     router.push(`/?${queryParams.toString()}`);
   };
+  
   const [page, setPage] = useState<number>(1);
   return (
     <div className="p-4 sm:ml-96 border-2 border-gray-200 border-dashed rounded-lg bg-background">
@@ -49,6 +50,7 @@ export default function HomeModules(props: Props) {
         result={props.pagination.total_records}
         hanldeChangeState={handleChangeState}
         currentView={viewState}
+        searchParams={props.searchParams}
       />
 
       <div className="flex items-center justify-center h-fit mb-4 rounded bg-gray-50">

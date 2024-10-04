@@ -1,17 +1,37 @@
+import { fetchNobel, NobelProps } from "@/actions/nobelAction";
+import { SearchParamsProps } from "@/app/page";
+import { CsvHeader } from "@/constants/csv-column.constant";
 import { STATE_ENUM } from "@/enums/state.enum";
-import React, { SetStateAction } from "react";
+import React, { SetStateAction, useState } from "react";
+import CsvDownload from "react-csv-downloader";
 
 type HeaderProps = {
   result: number;
   hanldeChangeState: (state: SetStateAction<STATE_ENUM>) => void;
   currentView: STATE_ENUM;
+  searchParams: SearchParamsProps;
 };
 
 const Header: React.FC<HeaderProps> = ({
   result,
   hanldeChangeState,
   currentView,
+  searchParams,
 }) => {
+
+  const handleQueryData = async () => {
+    const props: NobelProps = {
+      page: "1",
+      page_size: "100",
+      category_filter: searchParams.category_filter || "",
+      name_filter: searchParams.name_filter || "",
+      prize_year: searchParams.prize_year || "",
+    };
+    const nobel = await fetchNobel(props);
+    
+    return Promise.resolve(nobel.data as unknown as any[]);
+  };
+
   return (
     <div className="flex justify-between py-6">
       <div className="rounded bg-gray-50 flex items-center">
@@ -130,9 +150,14 @@ const Header: React.FC<HeaderProps> = ({
             />
           </svg>
         </button>
-        <button className="bg-primary px-4 p-2.5 text-white rounded-lg font-medium">
+        <CsvDownload
+          filename="noble_person"
+          columns={CsvHeader}
+          datas={handleQueryData}
+          className="bg-primary px-4 p-2.5 text-white rounded-lg font-medium"
+        >
           Download CSV
-        </button>
+        </CsvDownload>
       </div>
     </div>
   );
