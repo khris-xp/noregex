@@ -1,8 +1,8 @@
 "use client";
 
-import { SearchParamsProps } from "@/app/page";
 import { Category } from "@/constants/category.constant";
 import { CountryType } from "@/types/country";
+import { SearchParamsProps } from "@/types/search";
 import { useRouter } from "next/navigation";
 import { Fragment, useRef, useState } from "react";
 import Checkbox from "./Checkbox";
@@ -75,39 +75,35 @@ export default function Sidebar(props: Props) {
   };
 
   const handleSearch = () => {
-    const categories = Category.filter(
-      (_, idx) => checkboxStates[`checkbox${idx + 1}`],
+    const getCheckedItems = <T extends CountryType | string>(
+      items: T[],
+      state: { [key: string]: boolean },
+    ): T[] => {
+      if (Array.isArray(items)) {
+        return items.filter((_, idx) => state[`checkbox${idx + 1}`]);
+      }
+      return [];
+    };
+
+    const categories = getCheckedItems(Category, checkboxStates);
+    const countries = getCheckedItems(props.country, countryCheckboxState).map(
+      (c) => (c as CountryType).name.common,
     );
-    const country = props.country.filter(
-      (_, idx) => countryCheckboxState[`checkbox${idx + 1}`],
-    );
 
-    const countryName = country.map((c) => c.name.common);
+    const filters = [
+      categories.length && `category_filter=${categories.join(",")}`,
+      searchName && `name_filter=${searchName}`,
+      startYear && `prize_year_start=${startYear}`,
+      endYear && `prize_year_end=${endYear}`,
+      startBornYear && `birth_year=${startBornYear}`,
+      endBornYear && `birth_year=${endBornYear}`,
+      countries.length && `country_filter=${countries.join(",")}`,
+    ]
+      .filter(Boolean)
+      .join("&");
 
-    let query = "?";
-
-    if (categories.length > 0) {
-      query += `category_filter=${categories.join(",")}&`;
-    }
-
-    if (searchName !== "") {
-      query += `name_filter=${searchName}&`;
-    }
-
-    if (startYear !== "") {
-      query += `prize_year=${startYear}&`;
-    }
-
-    if (countryName.length > 0) {
-      query += `country_filter=${countryName.join(",")}&`;
-    }
-
-    if (searchTerm) {
-      query += `name_filter=${searchTerm}&`;
-    }
-
-    router.push(`${query}`);
-
+    const query = filters ? `?${filters}` : "";
+    router.push(query);
     setSearchedCountry(true);
   };
 
@@ -320,6 +316,29 @@ export default function Sidebar(props: Props) {
                   placeholder="Year"
                   value={endYear}
                   onChange={(e) => setEndYear(e.target.value)}
+                />
+              </div>
+            </li>
+            <li>
+              <Divider />
+            </li>
+            <li className="pb-3">
+              <label className="block mb-2 font-semibold">Birthyear</label>
+              <div className="flex items-center space-x-5">
+                <input
+                  type="text"
+                  className="bg-input w-1/2 p-2.5 rounded-lg placeholder:font-light"
+                  placeholder="Year"
+                  value={startBornYear}
+                  onChange={(e) => setStartBornYear(e.target.value)}
+                />
+                <div>-</div>
+                <input
+                  type="text"
+                  className="bg-input w-1/2 p-2.5 rounded-lg placeholder:font-light"
+                  placeholder="Year"
+                  value={endBornYear}
+                  onChange={(e) => setEndBornYear(e.target.value)}
                 />
               </div>
             </li>

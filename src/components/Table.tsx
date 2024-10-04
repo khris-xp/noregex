@@ -1,4 +1,3 @@
-"use client";
 import { NobelType } from "@/types/nobel";
 import Image from "next/image";
 import CsvDownload from "react-csv-downloader";
@@ -19,35 +18,37 @@ export default function Table({ data, columns }: Prop) {
         ))}
       </thead>
       <tbody>
-        {data.map((row_data, index) => (
-          <tr
-            key={index}
-            className={`py-[12px] mx-4 gap-4 grid grid-cols-[1fr_2fr_2fr_1fr_1.5fr_1.5fr_2fr] text-left ${index != 9 && "border-b-2"} border-[#F2F2F7]`}
-          >
-            <td>
-              <Image
-                src={row_data.image}
-                width={50}
-                height={50}
-                alt={row_data.name}
-              />
-            </td>
-            <td className="whitespace-normal break-words">{row_data.name}</td>
-            <td className="whitespace-normal break-words">
-              {row_data.category}
-            </td>
-            <td className="whitespace-normal break-words">{row_data.year}</td>
-            <td className="whitespace-normal break-words">
-              {row_data.born_date}
-            </td>
-            <td className="whitespace-normal break-words">
-              {row_data.born_place}
-            </td>
-            <td className="whitespace-normal break-words max-h-[6.75rem] overflow-hidden text-ellipsis">
-              <div className="line-clamp-4">{row_data.motivation}</div>
-            </td>
-          </tr>
-        ))}
+        {data.map((row_data, index) => {
+          return (
+            <tr
+              key={index}
+              className={`py-[12px] mx-4 gap-4 grid grid-cols-[1fr_2fr_2fr_1fr_1.5fr_1.5fr_2fr] text-left ${index != 9 && "border-b-2"} border-[#F2F2F7]`}
+            >
+              <td>
+                <Image
+                  src={row_data.image}
+                  width={50}
+                  height={50}
+                  alt={row_data.name}
+                />
+              </td>
+              <td className="whitespace-normal break-words">{row_data.name}</td>
+              <td className="whitespace-normal break-words">
+                {row_data.category}
+              </td>
+              <td className="whitespace-normal break-words">{row_data.year}</td>
+              <td className="whitespace-normal break-words">
+                {row_data.born_date}
+              </td>
+              <td className="whitespace-normal break-words">
+                {row_data.born_place}
+              </td>
+              <td className="whitespace-normal break-words max-h-[6.75rem] overflow-hidden text-ellipsis">
+                <div className="line-clamp-4">{row_data.motivation}</div>
+              </td>
+            </tr>
+          );
+        })}
       </tbody>
     </table>
   );
