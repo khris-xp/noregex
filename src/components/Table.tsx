@@ -1,6 +1,7 @@
 "use client";
 import { NobelType } from "@/types/nobel";
 import CsvDownload from "react-csv-downloader";
+import Image from "next/image";
 
 
 interface Prop {
