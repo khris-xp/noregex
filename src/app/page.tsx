@@ -18,6 +18,9 @@ export default async function Home({
     name_filter: searchParams.name_filter || "",
     prize_year_start: searchParams.prize_year_start || "",
     prize_year_end: searchParams.prize_year_end || "",
+    motivation_filter: searchParams.motivation_filter || "",
+    birth_year_start: searchParams.birth_year_start || "",
+    birth_year_end: searchParams.birth_year_end || "",
   };
 
   const nobel = await fetchNobel(props);

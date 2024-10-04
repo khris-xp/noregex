@@ -15,10 +15,10 @@ type Props = {
 
 export default function Sidebar(props: Props) {
   const router = useRouter();
-  const [startYear, setStartYear] = useState("");
-  const [endYear, setEndYear] = useState("");
-  const [startBornYear, setStartBornYear] = useState("");
-  const [endBornYear, setEndBornYear] = useState("");
+  const [startYear, setStartYear] = useState<string>("");
+  const [endYear, setEndYear] = useState<string>("");
+  const [startBornYear, setStartBornYear] = useState<string>("");
+  const [endBornYear, setEndBornYear] = useState<string>("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedCountries, setSelectedCountries] = useState<string[]>([]);
   const [searchedCountry, setSearchedCountry] = useState<boolean>(false);
@@ -26,8 +26,9 @@ export default function Sidebar(props: Props) {
     useState<boolean>(false);
   const [isDropdownCountryOpen, setIsDropdownCountryOpen] =
     useState<boolean>(false);
-  const [searchName, setSearchName] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchName, setSearchName] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [motivationSearch, setMotivationSearch] = useState<string>("");
   const countryRefs = useRef<(HTMLLIElement | null)[]>([]);
 
   const [checkboxStates, setCheckboxStates] = useState(
@@ -95,9 +96,10 @@ export default function Sidebar(props: Props) {
       searchName && `name_filter=${searchName}`,
       startYear && `prize_year_start=${startYear}`,
       endYear && `prize_year_end=${endYear}`,
-      startBornYear && `birth_year=${startBornYear}`,
-      endBornYear && `birth_year=${endBornYear}`,
+      startBornYear && `birth_year_start=${startBornYear}`,
+      endBornYear && `birth_year_end=${endBornYear}`,
       countries.length && `country_filter=${countries.join(",")}`,
+      motivationSearch && `motivation_filter=${motivationSearch}`,
     ]
       .filter(Boolean)
       .join("&");
@@ -164,6 +166,10 @@ export default function Sidebar(props: Props) {
       setSelectedCountries,
       selectedCountries,
     );
+  };
+
+  const handleMotivationSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMotivationSearch(e.target.value);
   };
 
   const handleCheckboxChange = (
@@ -395,6 +401,8 @@ export default function Sidebar(props: Props) {
                 type="text"
                 className="bg-input w-full p-2.5 rounded-lg"
                 placeholder="Search quote"
+                value={motivationSearch}
+                onChange={handleMotivationSearch}
               />
             </li>
             <li>
