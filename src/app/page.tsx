@@ -3,6 +3,7 @@ import { PAGE_ENUM } from "@/enums/page.enum";
 import { NobelProps } from "@/types/nobel";
 import { PaginationType } from "@/types/pagination";
 import { SearchParamsProps } from "@/types/search";
+import Head from "next/head";
 import HomeModules from "./modules/home";
 
 export default async function Home({
@@ -28,11 +29,17 @@ export default async function Home({
   const pagination: PaginationType = nobel.pagination;
 
   return (
-    <HomeModules
-      nobel={nobel.data}
-      initialPage={initialPage}
-      pagination={pagination}
-      searchParams={searchParams}
-    />
+    <main>
+      <Head>
+        <title>NoRegex</title>
+      </Head>
+
+      <HomeModules
+        nobel={nobel.data}
+        initialPage={initialPage}
+        pagination={pagination}
+        searchParams={searchParams}
+      />
+    </main>
   );
 }
