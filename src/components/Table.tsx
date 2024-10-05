@@ -9,17 +9,17 @@ interface Prop {
 
 export default function Table({ data, columns }: Prop) {
   return (
-    <table className="flex flex-col text-sm rounded-2xl w-full h-full overflow-hidden bg-white">
-      <thead className="rounded-t-lg py-[10px] gap-4 px-4 grid grid-cols-[1fr_2fr_2fr_1fr_1.5fr_1.5fr_2fr] text-center bg-[#283584] text-white">
-        {columns.map((column, index) => (
-          <tr key={index}>
-            <th>{column}</th>
-          </tr>
-        ))}
-      </thead>
-      <tbody>
-        {data.map((row_data, index) => {
-          return (
+    <div className="overflow-x-scroll overflow-hidden">
+      <table className="flex flex-col text-sm rounded-2xl w-full h-full min-w-[600px] bg-white">
+        <thead className="rounded-t-lg py-[10px] gap-4 px-4 grid grid-cols-[1fr_2fr_2fr_1fr_1.5fr_1.5fr_2fr] text-center bg-[#283584] text-white">
+          {columns.map((column, index) => (
+            <tr key={index}>
+              <th>{column}</th>
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {data.map((row_data, index) => (
             <tr
               key={index}
               className={`py-[12px] mx-4 gap-4 grid grid-cols-[1fr_2fr_2fr_1fr_1.5fr_1.5fr_2fr] text-left ${index != 9 && "border-b-2"} border-[#F2F2F7]`}
@@ -47,9 +47,9 @@ export default function Table({ data, columns }: Prop) {
                 <div className="line-clamp-4">{row_data.motivation}</div>
               </td>
             </tr>
-          );
-        })}
-      </tbody>
-    </table>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
