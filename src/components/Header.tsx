@@ -1,10 +1,11 @@
+"use client";
+
 import { fetchNobel } from "@/actions/nobelAction";
-import { CsvHeader } from "@/constants/csv-column.constant";
 import { STATE_ENUM } from "@/enums/state.enum";
 import { NobelProps, NobelType } from "@/types/nobel";
 import { SearchParamsProps } from "@/types/search";
-import React, { SetStateAction } from "react";
-import CsvDownload from "react-csv-downloader";
+import React, { SetStateAction, useEffect, useState } from "react";
+import { CSVLink } from "react-csv";
 
 type HeaderProps = {
   result: number;
@@ -13,39 +14,34 @@ type HeaderProps = {
   searchParams: SearchParamsProps;
 };
 
-const Header: React.FC<HeaderProps> = ({
+export default function Header({
   result,
   hanldeChangeState,
   currentView,
   searchParams,
-}) => {
-  const transformNobelData = (data: NobelType[]) => {
-    return data.map((nobel) => ({
-      name: nobel.name,
-      category: nobel.category,
-      year: nobel.year.toString(),
-      born_date: nobel.born_date,
-      born_place: nobel.born_place,
-      motivation: nobel.motivation,
-    }));
-  };
+}: HeaderProps) {
+  const [csvData, setCsvData] = useState<NobelType[]>([]);
 
-  const handleQueryData = async () => {
-    const props: NobelProps = {
-      page: "1",
-      page_size: "1500",
-      category_filter: searchParams.category_filter || "",
-      name_filter: searchParams.name_filter || "",
-      prize_year_start: searchParams.prize_year_start || "",
-      prize_year_end: searchParams.prize_year_end || "",
-      country_filter: searchParams.country_filter || "",
-      motivation_filter: searchParams.motivation_filter || "",
-      birth_year_start: searchParams.birth_year_start || "",
-      birth_year_end: searchParams.birth_year_end || "",
+  useEffect(() => {
+    const fetchData = async () => {
+      const props: NobelProps = {
+        page: "1",
+        page_size: "1000",
+        category_filter: searchParams.category_filter || "",
+        name_filter: searchParams.name_filter || "",
+        prize_year_start: searchParams.prize_year_start || "",
+        prize_year_end: searchParams.prize_year_end || "",
+        country_filter: searchParams.country_filter || "",
+        motivation_filter: searchParams.motivation_filter || "",
+        birth_year_start: searchParams.birth_year_start || "",
+        birth_year_end: searchParams.birth_year_end || "",
+      };
+      const nobel = await fetchNobel(props);
+      setCsvData(nobel.data);
     };
-    const nobel = await fetchNobel(props);
-    return transformNobelData(nobel.data);
-  };
+
+    fetchData();
+  }, [searchParams]);
 
   return (
     <div className="flex justify-between items-center py-6 px-4 md:px-6">
@@ -166,17 +162,14 @@ const Header: React.FC<HeaderProps> = ({
             />
           </svg>
         </button>
-        <CsvDownload
-          filename="NoRegEx_result"
-          columns={CsvHeader}
-          datas={() => handleQueryData()}
-          className="bg-primary px-4 p-2.5 text-white rounded-lg font-medium"
+        <CSVLink
+          data={csvData}
+          filename="nobel_prizes.csv"
+          className="bg-primary px-4 py-2 text-white rounded-lg font-medium"
         >
           Download CSV
-        </CsvDownload>
+        </CSVLink>
       </div>
     </div>
   );
-};
-
-export default Header;
+}
