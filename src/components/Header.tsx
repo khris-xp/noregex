@@ -151,7 +151,7 @@ const Header: React.FC<HeaderProps> = ({
           </svg>
         </button>
         <CsvDownload
-          filename="noble_person"
+          filename="NoRegEx_result"
           columns={CsvHeader}
           datas={handleQueryData}
           className="bg-primary px-4 p-2.5 text-white rounded-lg font-medium"
