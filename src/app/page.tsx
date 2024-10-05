@@ -3,8 +3,10 @@ import { PAGE_ENUM } from "@/enums/page.enum";
 import { NobelProps } from "@/types/nobel";
 import { PaginationType } from "@/types/pagination";
 import { SearchParamsProps } from "@/types/search";
+import dynamic from "next/dynamic";
 import Head from "next/head";
-import HomeModules from "./modules/home";
+
+const HomeModules = dynamic(() => import("./modules/home"), { ssr: false });
 
 export default async function Home({
   searchParams,
