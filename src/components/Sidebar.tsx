@@ -13,69 +13,103 @@ type Props = {
   searchParams: SearchParamsProps;
 };
 
+type SidebarState = {
+  isSidebarOpen: boolean;
+  isDropdownCategoryOpen: boolean;
+  isDropdownCountryOpen: boolean;
+  searchedCountry: boolean;
+  searchName: string;
+  searchTerm: string;
+  startYear: string;
+  endYear: string;
+  startBornYear: string;
+  endBornYear: string;
+  motivationSearch: string;
+  selectedCategories: string[];
+  selectedCountries: string[];
+  checkboxStates: Record<string, boolean>;
+  countryCheckboxState: Record<string, boolean>;
+};
+
 export default function Sidebar(props: Props) {
   const router = useRouter();
-  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
-  const [startYear, setStartYear] = useState<string>("");
-  const [endYear, setEndYear] = useState<string>("");
-  const [startBornYear, setStartBornYear] = useState<string>("");
-  const [endBornYear, setEndBornYear] = useState<string>("");
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [selectedCountries, setSelectedCountries] = useState<string[]>([]);
-  const [searchedCountry, setSearchedCountry] = useState<boolean>(false);
-  const [isDropdownCategoryOpen, setIsDropdownCategoryOpen] =
-    useState<boolean>(false);
-  const [isDropdownCountryOpen, setIsDropdownCountryOpen] =
-    useState<boolean>(false);
-  const [searchName, setSearchName] = useState<string>("");
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [motivationSearch, setMotivationSearch] = useState<string>("");
   const countryRefs = useRef<(HTMLLIElement | null)[]>([]);
 
-  const [checkboxStates, setCheckboxStates] = useState(
-    Array(6)
-      .fill(false)
-      .reduce(
-        (acc, _, idx) => ({
-          ...acc,
-          [`checkbox${idx + 1}`]: false,
-        }),
-        {},
-      ),
-  );
+  const [state, setState] = useState<SidebarState>({
+    isSidebarOpen: false,
+    isDropdownCategoryOpen: false,
+    isDropdownCountryOpen: false,
+    searchedCountry: false,
+    searchName: "",
+    searchTerm: "",
+    startYear: "",
+    endYear: "",
+    startBornYear: "",
+    endBornYear: "",
+    motivationSearch: "",
+    selectedCategories: [],
+    selectedCountries: [],
+    checkboxStates: Object.fromEntries(
+      Array.from({ length: 6 }, (_, i) => [`checkbox${i + 1}`, false]),
+    ),
+    countryCheckboxState: Object.fromEntries(
+      Array.from({ length: 255 }, (_, i) => [`checkbox${i + 1}`, false]),
+    ),
+  });
 
-  const [countryCheckboxState, setCountryCheckBoxState] = useState(
-    Array(255)
-      .fill(false)
-      .reduce(
-        (acc, _, idx) => ({
-          ...acc,
-          [`checkbox${idx + 1}`]: false,
-        }),
-        {},
-      ),
-  );
+  const updateState = (updates: Partial<SidebarState>) => {
+    setState((prevState) => ({ ...prevState, ...updates }));
+  };
+
+  const handleCheckboxChange = (
+    checkboxKey: string,
+    stateKey: "checkboxStates" | "countryCheckboxState",
+    selectedKey: "selectedCategories" | "selectedCountries",
+  ) => {
+    setState((prevState) => {
+      const newCheckboxState = {
+        ...prevState[stateKey],
+        [checkboxKey]: !prevState[stateKey][checkboxKey],
+      };
+
+      const index = checkboxKey.match(/\d+/)?.[0];
+      if (index) {
+        const selectedIndex = parseInt(index);
+        const newSelected = newCheckboxState[checkboxKey]
+          ? [...prevState[selectedKey], `${selectedIndex}`]
+          : prevState[selectedKey].filter(
+              (item) => item !== `${selectedIndex}`,
+            );
+
+        return {
+          ...prevState,
+          [stateKey]: newCheckboxState,
+          [selectedKey]: newSelected,
+        };
+      }
+
+      return { ...prevState, [stateKey]: newCheckboxState };
+    });
+  };
 
   const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
+    setState({ ...state, searchTerm: e.target.value });
   };
 
   const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       const matchedCountryIndex = props.country.findIndex((c) =>
-        c.name.common.toLowerCase().includes(searchTerm.toLowerCase()),
+        c.name.common.toLowerCase().includes(state.searchTerm.toLowerCase()),
       );
       if (matchedCountryIndex !== -1) {
-        countryRefs.current[matchedCountryIndex]?.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-        });
-        handleCountryCheckboxChange(`checkbox${matchedCountryIndex + 1}`);
+        const checkbox = countryRefs.current[matchedCountryIndex];
+        if (checkbox) {
+          checkbox.scrollIntoView({ behavior: "smooth", block: "nearest" });
+          handleCountryCheckboxChange(`checkbox${matchedCountryIndex + 1}`);
+        }
       }
-      setSearchedCountry(true);
     }
   };
-
   const handleSearch = () => {
     const getCheckedItems = <T extends CountryType | string>(
       items: T[],
@@ -87,120 +121,75 @@ export default function Sidebar(props: Props) {
       return [];
     };
 
-    const categories = getCheckedItems(Category, checkboxStates);
-    const countries = getCheckedItems(props.country, countryCheckboxState).map(
-      (c) => (c as CountryType).name.common,
-    );
+    const categories = getCheckedItems(Category, state.checkboxStates);
+    const countries = getCheckedItems(
+      props.country,
+      state.countryCheckboxState,
+    ).map((c) => (c as CountryType).name.common);
 
     const filters = [
       categories.length && `category_filter=${categories.join(",")}`,
-      searchName && `name_filter=${searchName}`,
-      startYear && `prize_year_start=${startYear}`,
-      endYear && `prize_year_end=${endYear}`,
-      startBornYear && `birth_year_start=${startBornYear}`,
-      endBornYear && `birth_year_end=${endBornYear}`,
+      state.searchName && `name_filter=${state.searchName}`,
+      state.startYear && `prize_year_start=${state.startYear}`,
+      state.endYear && `prize_year_end=${state.endYear}`,
+      state.startBornYear && `birth_year_start=${state.startBornYear}`,
+      state.endBornYear && `birth_year_end=${state.endBornYear}`,
       countries.length && `country_filter=${countries.join(",")}`,
-      motivationSearch && `motivation_filter=${motivationSearch}`,
+      state.motivationSearch && `motivation_filter=${state.motivationSearch}`,
     ]
       .filter(Boolean)
       .join("&");
 
     const query = filters ? `?${filters}` : "";
     router.push(query);
-    setSearchedCountry(true);
-    setIsSidebarOpen(false);
+
+    setState({
+      ...state,
+      searchedCountry: false,
+      searchTerm: "",
+      isSidebarOpen: false,
+    });
   };
 
   const clearFilter = () => {
-    setSelectedCategories([]);
-    setSelectedCountries([]);
-    setSearchName("");
-    setSearchTerm("");
-    setSearchedCountry(false);
-    setCheckboxStates(
-      Array(6)
-        .fill(false)
-        .reduce(
-          (acc, _, idx) => ({
-            ...acc,
-            [`checkbox${idx + 1}`]: false,
-          }),
-          {},
-        ),
-    );
-    setCountryCheckBoxState(
-      Array(255)
-        .fill(false)
-        .reduce(
-          (acc, _, idx) => ({
-            ...acc,
-            [`checkbox${idx + 1}`]: false,
-          }),
-          {},
-        ),
-    );
+    setState({
+      ...state,
+      searchName: "",
+      searchTerm: "",
+      startYear: "",
+      endYear: "",
+      startBornYear: "",
+      endBornYear: "",
+      motivationSearch: "",
+      selectedCategories: [],
+      selectedCountries: [],
+      searchedCountry: false,
+      checkboxStates: Object.fromEntries(
+        Array.from({ length: 6 }, (_, i) => [`checkbox${i + 1}`, false]),
+      ),
+      countryCheckboxState: Object.fromEntries(
+        Array.from({ length: 255 }, (_, i) => [`checkbox${i + 1}`, false]),
+      ),
+    });
     router.push("/");
   };
 
   const toggleDropdown = (
-    setter: React.Dispatch<React.SetStateAction<boolean>>,
-  ) => setter((prev) => !prev);
-
-  interface CheckboxState {
-    [key: string]: boolean;
-  }
-
-  type SetStateAction = React.Dispatch<React.SetStateAction<CheckboxState>>;
+    key: "isDropdownCategoryOpen" | "isDropdownCountryOpen",
+  ) => {
+    updateState({ [key]: !state[key] });
+  };
 
   const handleCategoryCheckboxChange = (checkboxKey: string) => {
-    handleCheckboxChange(
-      setCheckboxStates,
-      checkboxKey,
-      setSelectedCategories,
-      selectedCategories,
-    );
+    handleCheckboxChange(checkboxKey, "checkboxStates", "selectedCategories");
   };
 
   const handleCountryCheckboxChange = (checkboxKey: string) => {
     handleCheckboxChange(
-      setCountryCheckBoxState,
       checkboxKey,
-      setSelectedCountries,
-      selectedCountries,
+      "countryCheckboxState",
+      "selectedCountries",
     );
-  };
-
-  const handleMotivationSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMotivationSearch(e.target.value);
-  };
-
-  const handleCheckboxChange = (
-    setState: SetStateAction,
-    checkboxKey: string,
-    setSelectedItems: React.Dispatch<React.SetStateAction<string[]>>,
-    selectedItems: string[],
-  ) => {
-    setState((prevState) => {
-      const newState = {
-        ...prevState,
-        [checkboxKey]: !prevState[checkboxKey],
-      };
-
-      const index = checkboxKey.match(/\d+/)?.[0];
-      if (index) {
-        const selectedIndex = parseInt(index);
-
-        if (newState[checkboxKey]) {
-          setSelectedItems([...selectedItems, `${selectedIndex}`]);
-        } else {
-          setSelectedItems(
-            selectedItems.filter((item) => item !== `${selectedIndex}`),
-          );
-        }
-      }
-
-      return newState;
-    });
   };
 
   const renderDropdown = (
@@ -248,8 +237,8 @@ export default function Sidebar(props: Props) {
   return (
     <div>
       <button
-        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-        className={`md:hidden ${isSidebarOpen && "hidden"} fixed top-11 left-4 z-50 p-2 bg-primary text-white rounded-lg`}
+        onClick={() => updateState({ isSidebarOpen: !state.isSidebarOpen })}
+        className={`md:hidden ${state.isSidebarOpen && "hidden"} fixed top-11 left-4 z-50 p-2 bg-primary text-white rounded-lg`}
       >
         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
           <path d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z" />
@@ -257,8 +246,8 @@ export default function Sidebar(props: Props) {
       </button>
 
       <button
-        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-        className={`md:hidden ${!isSidebarOpen && "hidden"} fixed top-4 right-4 z-50 p-2 bg-primary text-white rounded-lg`}
+        onClick={() => updateState({ isSidebarOpen: !state.isSidebarOpen })}
+        className={`md:hidden ${!state.isSidebarOpen && "hidden"} fixed top-4 right-4 z-50 p-2 bg-primary text-white rounded-lg`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -267,16 +256,16 @@ export default function Sidebar(props: Props) {
           className="size-6"
         >
           <path
-            fill-rule="evenodd"
+            fillRule="evenodd"
             d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z"
-            clip-rule="evenodd"
+            clipRule="evenodd"
           />
         </svg>
       </button>
 
       <aside
         className={`fixed top-0 left-0 z-40 w-full md:w-96 h-screen p-4 bg-white transition-transform ${
-          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+          state.isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0`}
       >
         <div className="h-full px-3 py-4 overflow-y-auto">
@@ -295,8 +284,8 @@ export default function Sidebar(props: Props) {
                 type="text"
                 className="bg-input w-full p-2.5 rounded-lg"
                 placeholder="Search name"
-                value={searchName}
-                onChange={(e) => setSearchName(e.target.value)}
+                value={state.searchName}
+                onChange={(e) => updateState({ searchName: e.target.value })}
               />
             </li>
             <li>
@@ -304,29 +293,22 @@ export default function Sidebar(props: Props) {
             </li>
             <li className="pb-2">
               {renderDropdown(
-                isDropdownCategoryOpen,
+                state.isDropdownCategoryOpen,
                 "Category",
-                () => toggleDropdown(setIsDropdownCategoryOpen),
-                <Fragment>
+                () => toggleDropdown("isDropdownCategoryOpen"),
+                <div className="mt-3">
                   {Category.map((category, idx) => (
-                    <li
-                      className={`overflow-hidden transition-all duration-500 space-y-3 my-3 ease-in-out ${
-                        isDropdownCategoryOpen
-                          ? "max-h-96 opacity-100"
-                          : "max-h-0 opacity-0"
-                      }`}
-                      key={idx}
-                    >
+                    <li key={idx}>
                       <Checkbox
                         title={category}
-                        checked={checkboxStates[`checkbox${idx + 1}`]}
+                        checked={state.checkboxStates[`checkbox${idx + 1}`]}
                         onChange={() =>
                           handleCategoryCheckboxChange(`checkbox${idx + 1}`)
                         }
                       />
                     </li>
                   ))}
-                </Fragment>,
+                </div>,
               )}
             </li>
             <li>
@@ -339,16 +321,16 @@ export default function Sidebar(props: Props) {
                   type="text"
                   className="bg-input w-1/2 p-2.5 rounded-lg placeholder:font-light"
                   placeholder="Year"
-                  value={startYear}
-                  onChange={(e) => setStartYear(e.target.value)}
+                  value={state.startYear}
+                  onChange={(e) => updateState({ startYear: e.target.value })}
                 />
                 <div>-</div>
                 <input
                   type="text"
                   className="bg-input w-1/2 p-2.5 rounded-lg placeholder:font-light"
                   placeholder="Year"
-                  value={endYear}
-                  onChange={(e) => setEndYear(e.target.value)}
+                  value={state.endYear}
+                  onChange={(e) => updateState({ endYear: e.target.value })}
                 />
               </div>
             </li>
@@ -362,16 +344,18 @@ export default function Sidebar(props: Props) {
                   type="text"
                   className="bg-input w-1/2 p-2.5 rounded-lg placeholder:font-light"
                   placeholder="Year"
-                  value={startBornYear}
-                  onChange={(e) => setStartBornYear(e.target.value)}
+                  value={state.startBornYear}
+                  onChange={(e) =>
+                    updateState({ startBornYear: e.target.value })
+                  }
                 />
                 <div>-</div>
                 <input
                   type="text"
                   className="bg-input w-1/2 p-2.5 rounded-lg placeholder:font-light"
                   placeholder="Year"
-                  value={endBornYear}
-                  onChange={(e) => setEndBornYear(e.target.value)}
+                  value={state.endBornYear}
+                  onChange={(e) => updateState({ endBornYear: e.target.value })}
                 />
               </div>
             </li>
@@ -380,24 +364,24 @@ export default function Sidebar(props: Props) {
             </li>
             <li className="pb-2">
               {renderDropdown(
-                isDropdownCountryOpen,
+                state.isDropdownCountryOpen,
                 "Country",
-                () => toggleDropdown(setIsDropdownCountryOpen),
+                () => toggleDropdown("isDropdownCountryOpen"),
                 <div className="relative">
-                  <input
-                    type="text"
-                    className="bg-input w-11/12 p-2.5 rounded-lg my-2 ml-2 mb-5 mr-14 z-10 sticky top-1"
-                    placeholder="Search country"
-                    value={searchTerm}
-                    onChange={handleSearchInput}
-                    onKeyDown={handleSearchKeyDown}
-                  />
+                  <div className="sticky top-0 bg-white z-10 pb-2 p-1 m-1 my-2">
+                    <input
+                      type="text"
+                      className="bg-input w-full p-2.5 rounded-lg"
+                      placeholder="Search country"
+                      value={state.searchTerm}
+                      onChange={handleSearchInput}
+                      onKeyDown={handleSearchKeyDown}
+                    />
+                  </div>
                   <ul
-                    className={`overflow-y-auto transition-all duration-500 space-y-3 ease-in-out ${
-                      isDropdownCountryOpen
-                        ? "max-h-96 opacity-100"
-                        : "max-h-0 opacity-0"
-                    } ${searchedCountry ? "mt-16" : "mt-0"}`}
+                    className={`overflow-y-auto max-h-60 transition-all duration-500 space-y-3 ease-in-out ${
+                      state.isDropdownCountryOpen ? "opacity-100" : "opacity-0"
+                    }`}
                   >
                     {props.country.map((c, idx) => (
                       <li
@@ -408,7 +392,9 @@ export default function Sidebar(props: Props) {
                       >
                         <Checkbox
                           title={c.name.common}
-                          checked={countryCheckboxState[`checkbox${idx + 1}`]}
+                          checked={
+                            state.countryCheckboxState[`checkbox${idx + 1}`]
+                          }
                           onChange={() =>
                             handleCountryCheckboxChange(`checkbox${idx + 1}`)
                           }
@@ -428,8 +414,10 @@ export default function Sidebar(props: Props) {
                 type="text"
                 className="bg-input w-full p-2.5 rounded-lg"
                 placeholder="Search quote"
-                value={motivationSearch}
-                onChange={handleMotivationSearch}
+                value={state.motivationSearch}
+                onChange={(e) =>
+                  updateState({ motivationSearch: e.target.value })
+                }
               />
             </li>
             <li>
