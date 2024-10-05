@@ -1,8 +1,9 @@
-import { fetchNobel, NobelProps } from "@/actions/nobelAction";
-import { SearchParamsProps } from "@/app/page";
+import { fetchNobel } from "@/actions/nobelAction";
 import { CsvHeader } from "@/constants/csv-column.constant";
 import { STATE_ENUM } from "@/enums/state.enum";
-import React, { SetStateAction, useState } from "react";
+import { NobelProps, NobelType } from "@/types/nobel";
+import { SearchParamsProps } from "@/types/search";
+import React, { SetStateAction } from "react";
 import CsvDownload from "react-csv-downloader";
 
 type HeaderProps = {
@@ -18,6 +19,16 @@ const Header: React.FC<HeaderProps> = ({
   currentView,
   searchParams,
 }) => {
+  const transformNobelData = (data: NobelType[]) => {
+    return data.map((nobel) => ({
+      name: nobel.name,
+      category: nobel.category,
+      year: nobel.year.toString(),
+      born_date: nobel.born_date,
+      born_place: nobel.born_place,
+      motivation: nobel.motivation,
+    }));
+  };
 
   const handleQueryData = async () => {
     const props: NobelProps = {
@@ -25,11 +36,15 @@ const Header: React.FC<HeaderProps> = ({
       page_size: "1500",
       category_filter: searchParams.category_filter || "",
       name_filter: searchParams.name_filter || "",
-      prize_year: searchParams.prize_year || "",
+      prize_year_start: searchParams.prize_year_start || "",
+      prize_year_end: searchParams.prize_year_end || "",
+      country_filter: searchParams.country_filter || "",
+      motivation_filter: searchParams.motivation_filter || "",
+      birth_year_start: searchParams.birth_year_start || "",
+      birth_year_end: searchParams.birth_year_end || "",
     };
     const nobel = await fetchNobel(props);
-    
-    return Promise.resolve(nobel.data as unknown as any[]);
+    return transformNobelData(nobel.data);
   };
 
   return (
@@ -154,7 +169,7 @@ const Header: React.FC<HeaderProps> = ({
         <CsvDownload
           filename="NoRegEx_result"
           columns={CsvHeader}
-          datas={handleQueryData}
+          datas={() => handleQueryData()}
           className="bg-primary px-4 p-2.5 text-white rounded-lg font-medium"
         >
           Download CSV

@@ -46,14 +46,14 @@ export default function HomeModules({
       <CardView data={nobel} />
     );
   };
-  
+
   return (
     <div className="p-4 md:ml-96 rounded-lg bg-background">
       <Header
         result={pagination.total_records}
         hanldeChangeState={setViewState}
         currentView={viewState}
-        searchParams={props.searchParams}
+        searchParams={searchParams}
       />
 
       <div className="flex items-center justify-center h-fit mb-4 rounded bg-gray-50">

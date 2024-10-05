@@ -16,13 +16,9 @@
 ::-webkit-scrollbar-track {
   background-color: transparent;
 }
+
 .kanit-thin {
   font-family: "Kanit", sans-serif;
   font-weight: 500;
   font-style: normal;
 }
-/* .outfit {
-	font-family: "Outfit", sans-serif;
-	font-optical-sizing: auto;
-	font-weight: 100;
-} */
