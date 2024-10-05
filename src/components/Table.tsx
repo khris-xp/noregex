@@ -1,6 +1,5 @@
 import { NobelType } from "@/types/nobel";
 import Image from "next/image";
-import CsvDownload from "react-csv-downloader";
 
 interface Prop {
   data: NobelType[];
