@@ -1,30 +1,66 @@
+import { fetchNobel } from "@/actions/nobelAction";
+import { CsvHeader } from "@/constants/csv-column.constant";
 import { STATE_ENUM } from "@/enums/state.enum";
+import { NobelProps, NobelType } from "@/types/nobel";
+import { SearchParamsProps } from "@/types/search";
 import React, { SetStateAction } from "react";
+import CsvDownload from "react-csv-downloader";
 
 type HeaderProps = {
   result: number;
   hanldeChangeState: (state: SetStateAction<STATE_ENUM>) => void;
   currentView: STATE_ENUM;
+  searchParams: SearchParamsProps;
 };
 
 const Header: React.FC<HeaderProps> = ({
   result,
   hanldeChangeState,
   currentView,
+  searchParams,
 }) => {
+  const transformNobelData = (data: NobelType[]) => {
+    return data.map((nobel) => ({
+      name: nobel.name,
+      category: nobel.category,
+      year: nobel.year.toString(),
+      born_date: nobel.born_date,
+      born_place: nobel.born_place,
+      motivation: nobel.motivation,
+    }));
+  };
+
+  const handleQueryData = async () => {
+    const props: NobelProps = {
+      page: "1",
+      page_size: "1500",
+      category_filter: searchParams.category_filter || "",
+      name_filter: searchParams.name_filter || "",
+      prize_year_start: searchParams.prize_year_start || "",
+      prize_year_end: searchParams.prize_year_end || "",
+      country_filter: searchParams.country_filter || "",
+      motivation_filter: searchParams.motivation_filter || "",
+      birth_year_start: searchParams.birth_year_start || "",
+      birth_year_end: searchParams.birth_year_end || "",
+    };
+    const nobel = await fetchNobel(props);
+    return transformNobelData(nobel.data);
+  };
+
   return (
-    <div className="flex justify-between py-6">
-      <div className="rounded bg-gray-50 flex items-center">
+    <div className="flex justify-between items-center py-6 px-4 md:px-6">
+      <div className="flex items-center ml-10 md:ml-0">
         <p className="font-semibold text-xl">{result} Result</p>
       </div>
-      <div className="rounded bg-gray-50 gap-4 space-x-1 items-center flex">
+
+      <div className="flex items-center space-x-2 md:space-x-4">
         <button
           onClick={() => hanldeChangeState(STATE_ENUM.CARD_STATE)}
-          className={
-            currentView == STATE_ENUM.CARD_STATE
-              ? "bg-[#283584] text-white rounded hover:cursor-pointer p-0.5"
-              : "bg-white text-black rounded hover:cursor-pointer p-0.5"
-          }
+          className={`p-2 rounded ${
+            currentView === STATE_ENUM.CARD_STATE
+              ? "bg-primary text-white"
+              : "bg-white text-black"
+          }`}
         >
           <svg
             width="40"
@@ -73,11 +109,11 @@ const Header: React.FC<HeaderProps> = ({
         </button>
         <button
           onClick={() => hanldeChangeState(STATE_ENUM.TABLE_STATE)}
-          className={
-            currentView == STATE_ENUM.TABLE_STATE
-              ? "bg-[#283584] text-white rounded hover:cursor-pointer p-0.5"
-              : "bg-white text-black rounded hover:cursor-pointer p-0.5"
-          }
+          className={`p-2 rounded ${
+            currentView === STATE_ENUM.TABLE_STATE
+              ? "bg-primary text-white"
+              : "bg-white text-black"
+          }`}
         >
           <svg
             width="40"
@@ -130,9 +166,14 @@ const Header: React.FC<HeaderProps> = ({
             />
           </svg>
         </button>
-        <button className="bg-primary px-4 p-2.5 text-white rounded-lg font-medium">
+        <CsvDownload
+          filename="NoRegEx_result"
+          columns={CsvHeader}
+          datas={() => handleQueryData()}
+          className="bg-primary px-4 p-2.5 text-white rounded-lg font-medium"
+        >
           Download CSV
-        </button>
+        </CsvDownload>
       </div>
     </div>
   );
