@@ -1,0 +1,11 @@
+services:
+  app:
+    image: noregex
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - /app/node_modules
+      - /app/.next
+    ports:
+      - "3000:3000"

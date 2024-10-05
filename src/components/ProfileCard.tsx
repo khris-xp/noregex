@@ -1,6 +1,6 @@
 import { NobelType } from "@/types/nobel";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 
 interface Props {
   data: NobelType;
@@ -8,7 +8,7 @@ interface Props {
 
 const ProfileCard: React.FC<Props> = ({ data }) => {
   return (
-    <div className="max-w-sm rounded-xl overflow-hidden shadow-lg bg-white">
+    <div className="max-w-sm rounded-xl overflow-hidden shadow-lg bg-white ">
       <div className="relative">
         <Image
           className="w-full h-96 object-cover"
@@ -38,7 +38,7 @@ const ProfileCard: React.FC<Props> = ({ data }) => {
           <strong className="font-semibold">Birthdate:</strong> {data.born_date}
         </p>
         <p className="text-gray-900">
-          <strong className="font-semibold">Birthplace:</strong>{" "}
+          <strong className="font-semibold">Birthplace: </strong>
           {data.born_place}
         </p>
         <p className="text-gray-900 mt-4">“{data.motivation}”</p>

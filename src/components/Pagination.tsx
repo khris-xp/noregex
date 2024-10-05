@@ -1,86 +1,90 @@
-interface IProps {
+import React from "react";
+
+interface PaginationProps {
   totalItems: number;
   itemsPerPage: number;
   currentPage: number;
   onPageChange: (page: number) => void;
+  maxPageButtons?: number;
 }
 
-const Pagination: React.FC<IProps> = (props) => {
-  const startPage = Math.max(
-    1,
-    props.currentPage - Math.floor(props.itemsPerPage / 2),
-  );
-  const endPage = Math.min(
-    props.totalItems,
-    startPage + props.itemsPerPage - 1,
+const Pagination: React.FC<PaginationProps> = ({
+  totalItems,
+  itemsPerPage,
+  currentPage,
+  onPageChange,
+  maxPageButtons = 5,
+}) => {
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  const getPageNumbers = () => {
+    const halfMaxButtons = Math.floor(maxPageButtons / 2);
+    let startPage = Math.max(1, currentPage - halfMaxButtons);
+    let endPage = Math.min(totalPages, startPage + maxPageButtons - 1);
+
+    if (endPage - startPage + 1 < maxPageButtons) {
+      startPage = Math.max(1, endPage - maxPageButtons + 1);
+    }
+
+    return Array.from(
+      { length: endPage - startPage + 1 },
+      (_, i) => startPage + i,
+    );
+  };
+
+  const pageNumbers = getPageNumbers();
+
+  const renderPageButton = (page: number, label?: string) => (
+    <button
+      key={page}
+      onClick={() => onPageChange(page)}
+      disabled={currentPage === page}
+      className={`px-3 py-2 mx-1 rounded-xl border-2 ${
+        currentPage === page
+          ? "bg-primary text-white border-primary"
+          : "bg-white text-gray-800 border-gray-200 hover:bg-primary hover:text-white hover:border-primary"
+      } cursor-pointer`}
+    >
+      {label || page}
+    </button>
   );
 
   return (
-    <div>
-      <ul className="flex items-center -space-x-px h-8 text-sm">
-        {props.currentPage > 1 && (
-          <li>
-            <button
-              className={`float-left flex justify-center items-center w-10 h-10 mx-1 rounded-xl border-2 bg-white hover:bg-primary text-gray-800 hover:text-white border-gray-200 hover:border-primary cursor-pointer`}
-              onClick={() => props.onPageChange(props.currentPage - 1)}
-            >
-              {"<<"}
-            </button>
-          </li>
-        )}
+    <nav className="flex justify-center items-center mt-4">
+      <button
+        onClick={() => onPageChange(currentPage - 1)}
+        disabled={currentPage === 1}
+        className="px-3 py-2 mx-1 rounded-xl border-2 bg-white text-gray-800 border-gray-200 hover:bg-primary hover:text-white hover:border-primary cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        &lt;
+      </button>
 
-        {startPage > 1 && (
-          <div className="px-1">
-            <button
-              className={`float-left flex justify-center items-center w-10 h-10 mx-1 rounded-xl border-2 ${props.currentPage === 1 ? "bg-primary text-white border-primary" : "bg-white text-gray-800 border-gray-200"} hover:bg-primary hover:text-white border-gray-200 hover:border-primary cursor-pointer`}
-              onClick={() => props.onPageChange(1)}
-              type="button"
-            >
-              1
-            </button>
-          </div>
-        )}
+      {pageNumbers[0] > 1 && (
+        <>
+          {renderPageButton(1)}
+          {pageNumbers[0] > 2 && <span className="mx-2">...</span>}
+        </>
+      )}
 
-        {startPage > 2 && <div className="px-1">...</div>}
+      {pageNumbers.map((page) => renderPageButton(page))}
 
-        {Array.from(
-          { length: endPage - startPage + 1 },
-          (_, index) => startPage + index,
-        ).map((page) => (
-          <div className="px-1" key={page}>
-            <button
-              className={`float-left flex justify-center items-center w-10 h-10 mx-1 rounded-xl border-2 ${props.currentPage === page ? "bg-primary text-white border-primary" : "bg-white text-gray-800 border-gray-200"} hover:bg-primary hover:text-white hover:border-primary cursor-pointer`}
-              onClick={() => props.onPageChange(page)}
-              type="button"
-              disabled={props.currentPage === page}
-            >
-              {page.toString()}
-            </button>
-          </div>
-        ))}
-        {endPage < props.totalItems - 1 && <div className="px-1">...</div>}
-        {endPage < props.totalItems && (
-          <div className="px-1">
-            <button
-              className={`float-left flex justify-center items-center w-10 h-10 mx-1 rounded-xl border-2 ${props.currentPage === props.totalItems - 1 ? "bg-primary text-white border-primary" : "bg-white text-gray-800 border-gray-200"} hover:bg-primary hover:text-white border-gray-200 hover:border-primary cursor-pointer`}
-              onClick={() => props.onPageChange(props.totalItems - 1)}
-              type="button"
-            >
-              {props.totalItems.toString()}
-            </button>
-          </div>
-        )}
-        <li>
-          <button
-            className="float-left flex justify-center items-center w-10 h-10 mx-1 rounded-xl border-2 bg-white hover:bg-[#283584] text-[#333333] hover:text-white border-[#F1F1F1] hover:border-[#283584] cursor-pointer"
-            onClick={() => props.onPageChange(props.currentPage + 1)}
-            disabled={props.currentPage === props.totalItems - 1}
-          >
-            {">>"}
-          </button>
-        </li>
-      </ul>
-    </div>
+      {pageNumbers[pageNumbers.length - 1] < totalPages && (
+        <>
+          {pageNumbers[pageNumbers.length - 1] < totalPages - 1 && (
+            <span className="mx-2">...</span>
+          )}
+          {renderPageButton(totalPages)}
+        </>
+      )}
+
+      <button
+        onClick={() => onPageChange(currentPage + 1)}
+        disabled={currentPage === totalPages}
+        className="px-3 py-2 mx-1 rounded-xl border-2 bg-white text-gray-800 border-gray-200 hover:bg-primary hover:text-white hover:border-primary cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        &gt;
+      </button>
+    </nav>
   );
 };
 

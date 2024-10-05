@@ -1,8 +1,8 @@
 "use client";
 
-import { SearchParamsProps } from "@/app/page";
 import { Category } from "@/constants/category.constant";
 import { CountryType } from "@/types/country";
+import { SearchParamsProps } from "@/types/search";
 import { useRouter } from "next/navigation";
 import { Fragment, useRef, useState } from "react";
 import Checkbox from "./Checkbox";
@@ -15,10 +15,11 @@ type Props = {
 
 export default function Sidebar(props: Props) {
   const router = useRouter();
-  const [startYear, setStartYear] = useState("");
-  const [endYear, setEndYear] = useState("");
-  const [startBornYear, setStartBornYear] = useState("");
-  const [endBornYear, setEndBornYear] = useState("");
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+  const [startYear, setStartYear] = useState<string>("");
+  const [endYear, setEndYear] = useState<string>("");
+  const [startBornYear, setStartBornYear] = useState<string>("");
+  const [endBornYear, setEndBornYear] = useState<string>("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedCountries, setSelectedCountries] = useState<string[]>([]);
   const [searchedCountry, setSearchedCountry] = useState<boolean>(false);
@@ -26,8 +27,9 @@ export default function Sidebar(props: Props) {
     useState<boolean>(false);
   const [isDropdownCountryOpen, setIsDropdownCountryOpen] =
     useState<boolean>(false);
-  const [searchName, setSearchName] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchName, setSearchName] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [motivationSearch, setMotivationSearch] = useState<string>("");
   const countryRefs = useRef<(HTMLLIElement | null)[]>([]);
 
   const [checkboxStates, setCheckboxStates] = useState(
@@ -75,40 +77,38 @@ export default function Sidebar(props: Props) {
   };
 
   const handleSearch = () => {
-    const categories = Category.filter(
-      (_, idx) => checkboxStates[`checkbox${idx + 1}`],
+    const getCheckedItems = <T extends CountryType | string>(
+      items: T[],
+      state: { [key: string]: boolean },
+    ): T[] => {
+      if (Array.isArray(items)) {
+        return items.filter((_, idx) => state[`checkbox${idx + 1}`]);
+      }
+      return [];
+    };
+
+    const categories = getCheckedItems(Category, checkboxStates);
+    const countries = getCheckedItems(props.country, countryCheckboxState).map(
+      (c) => (c as CountryType).name.common,
     );
-    const country = props.country.filter(
-      (_, idx) => countryCheckboxState[`checkbox${idx + 1}`],
-    );
 
-    const countryName = country.map((c) => c.name.common);
+    const filters = [
+      categories.length && `category_filter=${categories.join(",")}`,
+      searchName && `name_filter=${searchName}`,
+      startYear && `prize_year_start=${startYear}`,
+      endYear && `prize_year_end=${endYear}`,
+      startBornYear && `birth_year_start=${startBornYear}`,
+      endBornYear && `birth_year_end=${endBornYear}`,
+      countries.length && `country_filter=${countries.join(",")}`,
+      motivationSearch && `motivation_filter=${motivationSearch}`,
+    ]
+      .filter(Boolean)
+      .join("&");
 
-    let query = "?";
-
-    if (categories.length > 0) {
-      query += `category_filter=${categories.join(",")}&`;
-    }
-
-    if (searchName !== "") {
-      query += `name_filter=${searchName}&`;
-    }
-
-    if (startYear !== "") {
-      query += `prize_year=${startYear}&`;
-    }
-
-    if (countryName.length > 0) {
-      query += `country_filter=${countryName.join(",")}&`;
-    }
-
-    if (searchTerm) {
-      query += `name_filter=${searchTerm}&`;
-    }
-
-    router.push(`${query}`);
-
+    const query = filters ? `?${filters}` : "";
+    router.push(query);
     setSearchedCountry(true);
+    setIsSidebarOpen(false);
   };
 
   const clearFilter = () => {
@@ -168,6 +168,10 @@ export default function Sidebar(props: Props) {
       setSelectedCountries,
       selectedCountries,
     );
+  };
+
+  const handleMotivationSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMotivationSearch(e.target.value);
   };
 
   const handleCheckboxChange = (
@@ -243,13 +247,38 @@ export default function Sidebar(props: Props) {
 
   return (
     <div>
-      <button className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden">
+      <button
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+        className={`md:hidden ${isSidebarOpen && "hidden"} fixed top-11 left-4 z-50 p-2 bg-primary text-white rounded-lg`}
+      >
         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
           <path d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z" />
         </svg>
       </button>
 
-      <aside className="fixed top-0 left-0 z-40 w-96 h-screen p-4">
+      <button
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+        className={`md:hidden ${!isSidebarOpen && "hidden"} fixed top-4 right-4 z-50 p-2 bg-primary text-white rounded-lg`}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="size-6"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z"
+            clip-rule="evenodd"
+          />
+        </svg>
+      </button>
+
+      <aside
+        className={`fixed top-0 left-0 z-40 w-full md:w-96 h-screen p-4 bg-white transition-transform ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } md:translate-x-0`}
+      >
         <div className="h-full px-3 py-4 overflow-y-auto">
           <ul className="space-y-2 font-medium">
             <li>
@@ -326,6 +355,29 @@ export default function Sidebar(props: Props) {
             <li>
               <Divider />
             </li>
+            <li className="pb-3">
+              <label className="block mb-2 font-semibold">Birthyear</label>
+              <div className="flex items-center space-x-5">
+                <input
+                  type="text"
+                  className="bg-input w-1/2 p-2.5 rounded-lg placeholder:font-light"
+                  placeholder="Year"
+                  value={startBornYear}
+                  onChange={(e) => setStartBornYear(e.target.value)}
+                />
+                <div>-</div>
+                <input
+                  type="text"
+                  className="bg-input w-1/2 p-2.5 rounded-lg placeholder:font-light"
+                  placeholder="Year"
+                  value={endBornYear}
+                  onChange={(e) => setEndBornYear(e.target.value)}
+                />
+              </div>
+            </li>
+            <li>
+              <Divider />
+            </li>
             <li className="pb-2">
               {renderDropdown(
                 isDropdownCountryOpen,
@@ -376,6 +428,8 @@ export default function Sidebar(props: Props) {
                 type="text"
                 className="bg-input w-full p-2.5 rounded-lg"
                 placeholder="Search quote"
+                value={motivationSearch}
+                onChange={handleMotivationSearch}
               />
             </li>
             <li>

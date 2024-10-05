@@ -1,37 +1,48 @@
-"use server";
-
+import { NobelProps } from "@/types/nobel";
 import { ModelResponseType } from "@/types/response";
-
-export type NobelProps = {
-  page: string;
-  page_size: string;
-  name_filter?: string;
-  category_filter?: string;
-  prize_year?: string;
-};
 
 export async function fetchNobel(
   props: NobelProps,
 ): Promise<ModelResponseType> {
-  let query = `page=${props.page}&page_size=${props.page_size}`;
-  if (props.name_filter) {
-    query += `&name_filter=${props.name_filter}`;
-  }
-  if (props.category_filter) {
-    query += `&category_filter=${props.category_filter}`;
-  }
+  const baseUrl =
+    process.env.NEXT_PUBLIC_API_URL || "https://toc-api.onionstreasure.com";
+  const endpoint = "/nobel-prizes";
 
-  if (props.prize_year) {
-    query += `&prize_year=${props.prize_year}`;
-  }
-  const response = await fetch(
-    `https://toc-api.onionstreasure.com/nobel-prizes?${query}`,
-    {
+  const queryParams = new URLSearchParams({
+    page: props.page.toString(),
+    page_size: props.page_size.toString(),
+    ...(props.name_filter && { name_filter: props.name_filter }),
+    ...(props.category_filter && { category_filter: props.category_filter }),
+    ...(props.prize_year_start && { prize_year_start: props.prize_year_start }),
+    ...(props.prize_year_end && { prize_year_end: props.prize_year_end }),
+    ...(props.country_filter && { country_filter: props.country_filter }),
+    ...(props.motivation_filter && {
+      motivation_filter: props.motivation_filter,
+    }),
+    ...(props.birth_year_start && {
+      birth_year_start: props.birth_year_start,
+    }),
+    ...(props.birth_year_end && { birth_year_end: props.birth_year_end }),
+  });
+
+  try {
+    const response = await fetch(`${baseUrl}${endpoint}?${queryParams}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        "Accept-Encoding": "gzip, deflate, br",
       },
-    },
-  );
-  return response.json();
+      next: { revalidate: 3600 },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data: ModelResponseType = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Failed to fetch Nobel prizes:", error);
+    throw error;
+  }
 }

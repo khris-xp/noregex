@@ -1,14 +1,9 @@
-import { fetchNobel, NobelProps } from "@/actions/nobelAction";
+import { fetchNobel } from "@/actions/nobelAction";
 import { PAGE_ENUM } from "@/enums/page.enum";
+import { NobelProps } from "@/types/nobel";
 import { PaginationType } from "@/types/pagination";
+import { SearchParamsProps } from "@/types/search";
 import HomeModules from "./modules/home";
-
-export type SearchParamsProps = {
-  page?: string;
-  category_filter?: string;
-  name_filter?: string;
-  prize_year?: string;
-};
 
 export default async function Home({
   searchParams,
@@ -18,9 +13,14 @@ export default async function Home({
   const props: NobelProps = {
     page: searchParams.page || "1",
     page_size: PAGE_ENUM.CARD_PER_PAGE.toString(),
+    country_filter: searchParams.country_filter || "",
     category_filter: searchParams.category_filter || "",
     name_filter: searchParams.name_filter || "",
-    prize_year: searchParams.prize_year || "",
+    prize_year_start: searchParams.prize_year_start || "",
+    prize_year_end: searchParams.prize_year_end || "",
+    motivation_filter: searchParams.motivation_filter || "",
+    birth_year_start: searchParams.birth_year_start || "",
+    birth_year_end: searchParams.birth_year_end || "",
   };
 
   const nobel = await fetchNobel(props);

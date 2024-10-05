@@ -1,4 +1,3 @@
-"use client";
 import { NobelType } from "@/types/nobel";
 import Image from "next/image";
 import CsvDownload from "react-csv-downloader";

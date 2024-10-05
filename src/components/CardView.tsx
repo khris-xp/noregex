@@ -1,6 +1,6 @@
-import React from "react";
-import { NobelType } from "@/types/nobel";
 import ProfileCard from "@/components/ProfileCard";
+import { NobelType } from "@/types/nobel";
+import React from "react";
 
 interface Props {
   data: NobelType[];
@@ -8,9 +8,11 @@ interface Props {
 
 const CardView: React.FC<Props> = ({ data }) => {
   return (
-    <div className="rounded-2xl w-full h-full grid grid-cols-2 gap-4 lg:grid-cols-3 xl:gap-8">
+    <div className="rounded-2xl w-full h-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6">
       {data.map((ele, index) => (
-        <ProfileCard key={index} data={ele} />
+        <div className="flex justify-center">
+          <ProfileCard key={index} data={ele} />
+        </div>
       ))}
     </div>
   );
