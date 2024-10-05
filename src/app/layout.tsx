@@ -25,7 +25,7 @@ export default async function RootLayout({
   const country = await fetchCountry();
   return (
     <html lang="en">
-      <body className={`${outfit.className} flex flex-col md:flex-row `}>
+      <body className={`${outfit.className} flex flex-col md:flex w-full`}>
         <Sidebar country={country} searchParams={searchParams} />
         <main>{children}</main>
       </body>

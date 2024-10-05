@@ -66,16 +66,14 @@ export default function Sidebar(props: Props) {
         c.name.common.toLowerCase().includes(searchTerm.toLowerCase()),
       );
       if (matchedCountryIndex !== -1) {
-        countryRefs.current[matchedCountryIndex]?.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-        });
-        handleCountryCheckboxChange(`checkbox${matchedCountryIndex + 1}`);
+        const checkbox = countryRefs.current[matchedCountryIndex];
+        if (checkbox) {
+          checkbox.scrollIntoView({ behavior: "smooth", block: "nearest" });
+          handleCountryCheckboxChange(`checkbox${matchedCountryIndex + 1}`);
+        }
       }
-      setSearchedCountry(true);
     }
   };
-
   const handleSearch = () => {
     const getCheckedItems = <T extends CountryType | string>(
       items: T[],
@@ -107,7 +105,8 @@ export default function Sidebar(props: Props) {
 
     const query = filters ? `?${filters}` : "";
     router.push(query);
-    setSearchedCountry(true);
+    setSearchTerm("");
+    setSearchedCountry(false);
     setIsSidebarOpen(false);
   };
 
@@ -384,20 +383,20 @@ export default function Sidebar(props: Props) {
                 "Country",
                 () => toggleDropdown(setIsDropdownCountryOpen),
                 <div className="relative">
-                  <input
-                    type="text"
-                    className="bg-input w-11/12 p-2.5 rounded-lg my-2 ml-2 mb-5 mr-14 z-10 sticky top-1"
-                    placeholder="Search country"
-                    value={searchTerm}
-                    onChange={handleSearchInput}
-                    onKeyDown={handleSearchKeyDown}
-                  />
+                  <div className="sticky top-0 bg-white z-10 pb-2 p-1 m-1 my-2">
+                    <input
+                      type="text"
+                      className="bg-input w-full p-2.5 rounded-lg"
+                      placeholder="Search country"
+                      value={searchTerm}
+                      onChange={handleSearchInput}
+                      onKeyDown={handleSearchKeyDown}
+                    />
+                  </div>
                   <ul
-                    className={`overflow-y-auto transition-all duration-500 space-y-3 ease-in-out ${
-                      isDropdownCountryOpen
-                        ? "max-h-96 opacity-100"
-                        : "max-h-0 opacity-0"
-                    } ${searchedCountry ? "mt-16" : "mt-0"}`}
+                    className={`overflow-y-auto max-h-60 transition-all duration-500 space-y-3 ease-in-out ${
+                      isDropdownCountryOpen ? "opacity-100" : "opacity-0"
+                    }`}
                   >
                     {props.country.map((c, idx) => (
                       <li
