@@ -22,7 +22,7 @@ const Header: React.FC<HeaderProps> = ({
   const handleQueryData = async () => {
     const props: NobelProps = {
       page: "1",
-      page_size: "100",
+      page_size: "1500",
       category_filter: searchParams.category_filter || "",
       name_filter: searchParams.name_filter || "",
       prize_year: searchParams.prize_year || "",
