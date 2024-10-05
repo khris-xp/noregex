@@ -105,7 +105,8 @@ export default function Sidebar(props: Props) {
         const checkbox = countryRefs.current[matchedCountryIndex];
         if (checkbox) {
           checkbox.scrollIntoView({ behavior: "smooth", block: "nearest" });
-          handleCountryCheckboxChange(`checkbox${matchedCountryIndex + 1}`);
+          if (!state.selectedCountries.includes(`${matchedCountryIndex + 1}`))
+            handleCountryCheckboxChange(`checkbox${matchedCountryIndex + 1}`);
         }
       }
     }
