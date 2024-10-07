@@ -1,4 +1,5 @@
 import { fetchCountry } from "@/actions/countryAction";
+import Footer from "@/components/Footer";
 import Sidebar from "@/components/Sidebar";
 import { SearchParamsProps } from "@/types/search";
 import type { Metadata } from "next";
@@ -28,6 +29,7 @@ export default async function RootLayout({
       <body className={`${outfit.className} flex flex-col md:flex w-full`}>
         <Sidebar country={country} searchParams={searchParams} />
         <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );
